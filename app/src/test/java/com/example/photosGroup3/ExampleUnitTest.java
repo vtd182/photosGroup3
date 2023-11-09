@@ -1,4 +1,4 @@
-package com.example.photosgroup3;
+package com.example.photosGroup3;
 
 import org.junit.Test;
 
