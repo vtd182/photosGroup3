@@ -70,43 +70,43 @@ import java.util.Objects;
 * */
 
 
-
 public class ImageDisplay extends Fragment {
     Context context;
+
 
     @SuppressLint("StaticFieldLeak")
     private static volatile ImageDisplay INSTANCE = null;
     @SuppressLint("StaticFieldLeak")
-    private static ImageDisplay MAIN_INSTANCE=null;
+    private static ImageDisplay MAIN_INSTANCE = null;
 
-    String fullNameFile="";
+    String fullNameFile = "";
 
     ImageButton changeBtn;
-    FloatingActionButton fab_camera,fab_expand,fab_url;
+    FloatingActionButton fab_camera, fab_expand, fab_url;
     GridView gridView;
     CardView cardView;
     ArrayList<String> names = new ArrayList<>();
-    int numCol=2;
+    int numCol = 2;
     ArrayList<String> images;
-    String namePictureShoot="";
+    String namePictureShoot = "";
     Bundle myStateInfo;
     LayoutInflater myStateInflater;
     ViewGroup myStatecontainer;
-    ImageDisplay.CustomAdapter customAdapter=null;
-    ImageDisplay.ListAdapter listAdapter=null;
+    ImageDisplay.CustomAdapter customAdapter = null;
+    ImageDisplay.ListAdapter listAdapter = null;
 
     ArrayList<ImageDate> imgDates;
     ArrayList<String> dates;
     ArrayList<Integer> size;
 
     TableLayout header;
-    LongClickCallback callback=null;
+    LongClickCallback callback = null;
 
 
-    public boolean isHolding=false;
-    public static boolean isMain=true;
+    public boolean isHolding = false;
+    public static boolean isMain = true;
 
-    ArrayList<String> selectedImages=new ArrayList<>();
+    ArrayList<String> selectedImages = new ArrayList<>();
 
 
     //universal-image-loader
@@ -120,8 +120,7 @@ public class ImageDisplay extends Fragment {
     // TODO: Rename and change types and number of parameters
 
     public static ImageDisplay getInstance() {
-        if(INSTANCE==null)
-        {
+        if (INSTANCE == null) {
             synchronized (ImageDisplay.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ImageDisplay();
@@ -136,18 +135,18 @@ public class ImageDisplay extends Fragment {
         return INSTANCE;
     }
 
-    public static void changeINSTANCE(){
-        if(isMain)
-        {
-            MAIN_INSTANCE=INSTANCE;
-            isMain=false;
-            INSTANCE=null;
+    public static void changeINSTANCE() {
+        if (isMain) {
+            MAIN_INSTANCE = INSTANCE;
+            isMain = false;
+            INSTANCE = null;
         }
     }
-    public static void restoreINSTANCE(){
-        if(!isMain){
-            INSTANCE=MAIN_INSTANCE;
-            isMain=true;
+
+    public static void restoreINSTANCE() {
+        if (!isMain) {
+            INSTANCE = MAIN_INSTANCE;
+            isMain = true;
         }
     }
 
@@ -156,7 +155,7 @@ public class ImageDisplay extends Fragment {
 
         private final LayoutInflater layoutInflater;
 
-        private class ViewHolder{
+        private class ViewHolder {
             ImageView imageView;
             CheckBox check;
         }
@@ -184,38 +183,36 @@ public class ImageDisplay extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-           ViewHolder viewHolder;
+            ViewHolder viewHolder;
 //            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            if(view == null){
-                view =layoutInflater.inflate(R.layout.row_item,viewGroup,false);
-                viewHolder=new ViewHolder();
-                viewHolder.imageView=view.findViewById(R.id.imageView);
-                viewHolder.check=view.findViewById(R.id.checkImage);
+            if (view == null) {
+                view = layoutInflater.inflate(R.layout.row_item, viewGroup, false);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = view.findViewById(R.id.imageView);
+                viewHolder.check = view.findViewById(R.id.checkImage);
                 view.setTag(viewHolder);
             } else {
-                viewHolder=(ViewHolder) view.getTag();
+                viewHolder = (ViewHolder) view.getTag();
 
             }
-            if(isHolding)
-            {
+            if (isHolding) {
                 viewHolder.check.setVisibility(View.VISIBLE);
 
                 viewHolder.check.setChecked(selectedImages.contains(imagePhotos.get(i)));
 
                 viewHolder.check.setOnCheckedChangeListener((compoundButton, b) -> {
-                    if(compoundButton.isPressed())
-                    {
-                        if(i <imagePhotos.size()) {
+                    if (compoundButton.isPressed()) {
+                        if (i < imagePhotos.size()) {
 
                             if (b) {
                                 if (!selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages= ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i),"choose");
+                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "choose");
                                     //selectedImages.add(imagePhotos.get(currentView));
                                 }
 
                             } else {
                                 if (selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages=  ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i),"unchoose");
+                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "unchoose");
 
                                     //selectedImages.remove(imagePhotos.get(currentView));
                                 }
@@ -229,35 +226,35 @@ public class ImageDisplay extends Fragment {
                     }
 
                 });
-            }
-            else
-            {
+            } else {
                 viewHolder.check.setVisibility(View.INVISIBLE);
             }
-            File imgFile= new File(imagePhotos.get(i));
-          ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse("file://"+ imgFile.getAbsolutePath())),viewHolder.imageView);
+            File imgFile = new File(imagePhotos.get(i));
+            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse("file://" + imgFile.getAbsolutePath())), viewHolder.imageView);
 
 
             return view;
         }
 
 
-
     }
 
     public interface LongClickCallback {
         void onLongClick();
+
         void afterLongClick();
     }
-    public void setLongClickCallBack(LongClickCallback callback){
-        this.callback=callback;
+
+    public void setLongClickCallBack(LongClickCallback callback) {
+        this.callback = callback;
     }
 
-    public class ListAdapter extends BaseAdapter{
+    public class ListAdapter extends BaseAdapter {
         private final ArrayList<String> imageNames;
         private final ArrayList<String> imagePhotos;
         private final LayoutInflater layoutInflater;
-        private class ViewHolder{
+
+        private class ViewHolder {
             TextView textView;
             ImageView imageView;
             CheckBox check;
@@ -288,37 +285,35 @@ public class ImageDisplay extends Fragment {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder viewHolder;
-            if(view == null){
-                view =layoutInflater.inflate(R.layout.list_item,viewGroup,false);
-                viewHolder=new ViewHolder();
-                viewHolder.imageView=view.findViewById(R.id.imageView);
-                viewHolder.textView=view.findViewById(R.id.tvName);
-                viewHolder.check=view.findViewById(R.id.checkImage);
+            if (view == null) {
+                view = layoutInflater.inflate(R.layout.list_item, viewGroup, false);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = view.findViewById(R.id.imageView);
+                viewHolder.textView = view.findViewById(R.id.tvName);
+                viewHolder.check = view.findViewById(R.id.checkImage);
                 view.setTag(viewHolder);
             } else {
-                viewHolder=(ViewHolder) view.getTag();
+                viewHolder = (ViewHolder) view.getTag();
             }
             TextView tvName = viewHolder.textView;
             tvName.setText(imageNames.get(i));
-            if(isHolding)
-            {
+            if (isHolding) {
                 viewHolder.check.setVisibility(View.VISIBLE);
 
                 viewHolder.check.setChecked(selectedImages.contains(imagePhotos.get(i)));
                 viewHolder.check.setOnCheckedChangeListener((compoundButton, b) -> {
-                    if(compoundButton.isPressed())
-                    {
-                        if(i <imagePhotos.size()) {
+                    if (compoundButton.isPressed()) {
+                        if (i < imagePhotos.size()) {
 
                             if (b) {
                                 if (!selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages= ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i),"choose");
+                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "choose");
                                     //selectedImages.add(imagePhotos.get(currentView));
                                 }
 
                             } else {
                                 if (selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages=  ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i),"unhoose");
+                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "unhoose");
 
                                     //selectedImages.remove(imagePhotos.get(currentView));
                                 }
@@ -332,13 +327,11 @@ public class ImageDisplay extends Fragment {
                     }
 
                 });
-            }
-            else
-            {
+            } else {
                 viewHolder.check.setVisibility(View.INVISIBLE);
             }
-            File imgFile= new File(imagePhotos.get(i));
-            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse("file://"+ imgFile.getAbsolutePath())),viewHolder.imageView);
+            File imgFile = new File(imagePhotos.get(i));
+            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse("file://" + imgFile.getAbsolutePath())), viewHolder.imageView);
             return view;
         }
     }
@@ -346,12 +339,12 @@ public class ImageDisplay extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.context= getActivity();
+        this.context = getActivity();
 
-        if(images == null) {
+        if (images == null) {
             assert context != null;
-            setImagesData (((MainActivity)context).getFileinDir());
-            Toast.makeText(getContext(),"Complete get file",Toast.LENGTH_SHORT).show();
+            setImagesData(((MainActivity) context).getFileinDir());
+            Toast.makeText(getContext(), "Complete get file", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -363,8 +356,8 @@ public class ImageDisplay extends Fragment {
 
 
         //Toast.makeText(getContext(),"ImageDisplay oncreatview",Toast.LENGTH_SHORT).show();
-        myStateInflater =inflater;
-        myStatecontainer=container;
+        myStateInflater = inflater;
+        myStatecontainer = container;
         myStateInfo = savedInstanceState;
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_image_display, container, false);
@@ -372,20 +365,18 @@ public class ImageDisplay extends Fragment {
         gridView = view.findViewById(R.id.gridView);
         changeBtn = view.findViewById(R.id.resizeView);
         cardView = view.findViewById(R.id.cardView);
-        fab_camera= view.findViewById(R.id.fab_Camera);
-        fab_expand= view.findViewById(R.id.fab_expand);
-        fab_url= view.findViewById(R.id.fab_url);
+        fab_camera = view.findViewById(R.id.fab_Camera);
+        fab_expand = view.findViewById(R.id.fab_expand);
+        fab_url = view.findViewById(R.id.fab_url);
 
-        if(customAdapter==null)
-        {
+        if (customAdapter == null) {
             customAdapter = new ImageDisplay.CustomAdapter(images, requireActivity());
 
         } else {
             customAdapter.notifyDataSetChanged();
         }
-        if(listAdapter==null)
-        {
-            listAdapter = new ImageDisplay.ListAdapter(names,images, requireActivity());
+        if (listAdapter == null) {
+            listAdapter = new ImageDisplay.ListAdapter(names, images, requireActivity());
         } else {
             listAdapter.notifyDataSetChanged();
         }
@@ -395,33 +386,29 @@ public class ImageDisplay extends Fragment {
         });
 
 
-
         gridView.setOnItemLongClickListener((adapterView, view16, i, l) -> {
-            isHolding =true;
+            isHolding = true;
             ((MainActivity) requireContext()).Holding(isHolding);
 
-            String selectedName= images.get(i);
+            String selectedName = images.get(i);
 
-            selectedImages= ((MainActivity) requireContext()).adjustChooseToDeleteInList(selectedName,"choose");
+            selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(selectedName, "choose");
 
             ((MainActivity) requireContext()).SelectedTextChange();
 
             notifyChangeGridLayout();
 
-
-
             return true;
         });
 
 
-
         changeBtn.setOnClickListener(view14 -> {
-            numCol=numCol%5+1;
-            if(numCol==1){
+            numCol = numCol % 5 + 1;
+            if (numCol == 1) {
 //                    numCol=2;
                 gridView.setAdapter(listAdapter);
 
-            } else if(numCol == 2) {
+            } else if (numCol == 2) {
                 gridView.setAdapter(customAdapter);
             }
             gridView.setNumColumns(numCol);
@@ -430,7 +417,7 @@ public class ImageDisplay extends Fragment {
         fab_url.setVisibility(View.INVISIBLE);
         fab_camera.setVisibility(View.INVISIBLE);
         fab_expand.setOnClickListener(view13 -> {
-            if (fab_camera.getVisibility() == View.INVISIBLE){
+            if (fab_camera.getVisibility() == View.INVISIBLE) {
                 fab_url.setVisibility(View.VISIBLE);
                 fab_camera.setVisibility(View.VISIBLE);
             } else {
@@ -439,23 +426,14 @@ public class ImageDisplay extends Fragment {
             }
         });
 
-        header= view.findViewById(R.id.header);
+        fab_camera.setOnClickListener(view12 -> {
+            openCamera();
+        });
+
+        header = view.findViewById(R.id.header);
 
         return view;
-//        return inflater.inflate(R.layout.fragment_image_display, container, false);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
@@ -468,9 +446,9 @@ public class ImageDisplay extends Fragment {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // There are no request codes
 
-                        File imgFile= new File(namePictureShoot);
-                        Bitmap imageShoot= BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imageShoot= ImageUltility.rotateImage(imageShoot,90);
+                        File imgFile = new File(namePictureShoot);
+                        Bitmap imageShoot = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        imageShoot = ImageUltility.rotateImage(imageShoot, 90);
                         FileOutputStream out;
                         try {
                             out = new FileOutputStream(imgFile);
@@ -481,15 +459,14 @@ public class ImageDisplay extends Fragment {
                             e.printStackTrace();
                         }
 
-                        if(!images.contains(imgFile.getAbsolutePath()))
-                        {
+                        if (!images.contains(imgFile.getAbsolutePath())) {
                             images.add(imgFile.getAbsolutePath());
                             names.add(getDisplayName(imgFile.getAbsolutePath()));
 
                         }
 
                         notifyChangeGridLayout();
-                        setImagesData (((MainActivity)context).getFileinDir());
+                        setImagesData(((MainActivity) context).getFileinDir());
 
                         Toast.makeText(getContext(), "Taking picture", Toast.LENGTH_SHORT).show();
                     }
@@ -497,31 +474,32 @@ public class ImageDisplay extends Fragment {
             });
 
 
-
-    public static String generateFileName(){
-        LocalDateTime now=LocalDateTime.now();
-        DateTimeFormatter myFormat=DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
+    public static String generateFileName() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
         return now.format(myFormat);
     }
+
     // Android 10+
-    private Uri getUri(String path){
+    private Uri getUri(String path) {
 
         ContentValues values = new ContentValues();
-        String tempName=generateFileName()+".jpg";
-        namePictureShoot= ((MainActivity) requireContext()).getCurrentDirectory()+'/'+tempName;
-        values.put(MediaStore.Images.Media.DISPLAY_NAME,tempName );
+        String tempName = generateFileName() + ".jpg";
+        namePictureShoot = ((MainActivity) requireContext()).getCurrentDirectory() + '/' + tempName;
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, tempName);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.Images.Media.RELATIVE_PATH, path);
 
-        return requireActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        return requireActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
-    public static String getDisplayName(String path){
-        int getPositionFolderName= path.lastIndexOf("/");
+
+    public static String getDisplayName(String path) {
+        int getPositionFolderName = path.lastIndexOf("/");
 
         return path.substring(getPositionFolderName + 1);
     }
 
-    public void notifyChangeGridLayout(){
+    public void notifyChangeGridLayout() {
         customAdapter.notifyDataSetChanged();
         listAdapter.notifyDataSetChanged();
     }
@@ -588,4 +566,24 @@ public class ImageDisplay extends Fragment {
             // ====================================================
         }
     }
+
+    private void openCamera()  {
+        // Ask permission
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),new String[]{
+                    Manifest.permission.CAMERA
+            },100);
+        }
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,getUri(Environment.DIRECTORY_PICTURES));
+        someActivityResultLauncher.launch(intent);
+    }
+
+    // Android 10+
+
+
+
+
 }
