@@ -382,7 +382,16 @@ public class ImageDisplay extends Fragment {
         }
 
         gridView.setAdapter(customAdapter);
+
         gridView.setOnItemClickListener((adapterView, view15, i, l) -> {
+            if (!isHolding) {
+                someActivityResultLauncher.launch(new Intent(getActivity(), SelectedPicture.class)
+                        .putExtra("size", size)//này là em bỏ qua cái selected nè
+                        .putExtra("images", images)
+                        .putExtra("dates", dates)
+                        .putExtra("pos", i));
+                Toast.makeText(context, "running", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
