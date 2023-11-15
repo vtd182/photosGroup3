@@ -423,6 +423,7 @@ public class ImageDisplay extends Fragment {
             gridView.setNumColumns(numCol);
         });
 
+        fab_url.setOnClickListener(view1 -> showInputDialogBox());
         fab_url.setVisibility(View.INVISIBLE);
         fab_camera.setVisibility(View.INVISIBLE);
         fab_expand.setOnClickListener(view13 -> {
@@ -444,6 +445,60 @@ public class ImageDisplay extends Fragment {
         return view;
     }
 
+    private void showInputDialogBox()
+    {
+        final String[] url_input = {"",""};
+        final Dialog customDialog = new Dialog( getContext());
+        customDialog.setTitle("Delete confirm");
+
+        customDialog.setContentView(R.layout.url_download_diagbox);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        customDialog.findViewById(R.id.download_url_cancel)
+                .setOnClickListener(view -> {
+                    customDialog.dismiss();
+                });
+
+        customDialog.findViewById(R.id.download_url_confirm)
+                .setOnClickListener(view -> {
+                    url_input[0] = ((EditText) customDialog.findViewById(R.id.download_url_input)).getText().toString();
+                    url_input[1] =((EditText) customDialog.findViewById(R.id.download_url_rename)).getText().toString();
+                    Toast.makeText(INSTANCE.getContext(), url_input[0], Toast.LENGTH_SHORT).show();
+                    DownloadImageFromURL(url_input[0].trim(),url_input[1].trim());
+
+                    customDialog.dismiss();
+                });
+
+        customDialog.show();
+    }
+
+    private void DownloadImageFromURL(String input,String fileName)
+    {
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(input));
+
+        String fileExtension=input.substring(input.lastIndexOf("."));
+        while ( fileExtension.charAt(fileExtension.length() - 1) == '\n') {
+            fileExtension = fileExtension.substring(0, fileExtension.length() - 1);
+        }
+
+        if (fileName.length()==0){
+            fileName= (new Date()).getTime() +"";
+
+        }
+        fullNameFile=((MainActivity) requireContext()).getPictureDirectory() + "/" + fileName + fileExtension;
+        request.setDescription("Downloading " + input + "...");
+        request.setTitle(input);
+        // request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationUri(Uri.fromFile(new File(fullNameFile)));
+        DownloadManager manager = (DownloadManager) INSTANCE.requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        manager.enqueue(request);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        Notification noti = new NotificationCompat.Builder(requireContext(),"Download " +fullNameFile )
+                .setContentText("Downloaded item")
+                .setSmallIcon(R.drawable.ic_launcher_background).build();
+    }
 
     // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
