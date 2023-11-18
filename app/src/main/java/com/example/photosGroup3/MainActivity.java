@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
         Picture = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
 
         //   arrFrag[0] = ImageDisplay.getInstance();
+        arrFrag[1] = AlbumsFragment.getInstance();
 
         arrRoundLayout[0] = R.drawable.round_photos;
         arrRoundLayout[1] = R.drawable.round_albums;
