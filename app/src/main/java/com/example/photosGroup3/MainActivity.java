@@ -181,7 +181,36 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
         chooseNavbar = findViewById(R.id.selectNavbar);
         status = findViewById(R.id.status);
 
+        deleteBtn = findViewById(R.id.deleteImageButton);
+        cancelBtn = findViewById(R.id.clear);
+        selectAll = findViewById(R.id.selectAll);
+        addToAlbumBtn = findViewById(R.id.addToAlbumBtn);
+        addToFavoriteBtn = findViewById(R.id.addToFavoriteBtn);
+        createSliderBtn = findViewById(R.id.createSliderBtn);
+        shareMultipleBtn = findViewById(R.id.shareMultipleBtn);
+        informationSelected = findViewById(R.id.infomationText);
 
+        deleteBtn.setOnClickListener(view -> showCustomDialogBox());
+        cancelBtn.setOnClickListener(view -> {
+            ImageDisplay ic = ImageDisplay.getInstance();
+            clearChooseToDeleteInList();
+            ic.clearClicked();
+        });
+        selectAll.setOnClickListener(view -> {
+            ImageDisplay ic = ImageDisplay.getInstance();
+            if (chooseToDeleteInList.size() == ic.images.size()) {
+                chooseToDeleteInList.clear();
+
+            } else {
+                chooseToDeleteInList = new ArrayList<>(ic.images);
+
+            }
+            ic.selectAllClicked();
+        });
+        addToAlbumBtn.setOnClickListener(view -> {
+            AlbumChoosingDialog dialog = new AlbumChoosingDialog(context);
+            dialog.show();
+        });
 
         arrIcon[0] = R.drawable.ic_baseline_photo;
         arrIcon[1] = R.drawable.ic_baseline_photo_library;
@@ -277,6 +306,42 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
         this.recreate();
     }
 
+    @SuppressLint("SetTextI18n")
+    private void showCustomDialogBox() {
+        final Dialog customDialog = new Dialog(context);
+        customDialog.setTitle("Delete confirm");
+
+        customDialog.setContentView(R.layout.delete_dialog_notify);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ((TextView) customDialog.findViewById(R.id.deleteNotify))
+                .setText("Do you want to delete " + deleteNotify + " image(s) permanently in your device ?");
+
+        customDialog.findViewById(R.id.cancel_delete)
+                .setOnClickListener(view -> {
+                    //donothing
+                    customDialog.dismiss();
+                });
+
+        customDialog.findViewById(R.id.confirmDelete)
+                .setOnClickListener(view -> {
+                    ImageDisplay ic = ImageDisplay.getInstance();
+                    String[] select = chooseToDeleteInList.toArray
+                            (new String[0]);
+
+                    // String[] select= (String[]) selectedImages.toArray();
+
+
+                    removeImageUpdate(select);
+                    ImageDelete.DeleteImage(select);
+                    clearChooseToDeleteInList(); // ??
+                    ic.deleteClicked(); // xoá clicked
+                    customDialog.dismiss();// ẩn diaglogbox
+                });
+
+        customDialog.show();
+    }
+
 
 
 
@@ -318,6 +383,22 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
 
 
     @Override
+    public void removeImageUpdate(String[] input) {
+        for (String name : input) {
+
+            Bitmap test = BitmapFactory.decodeFile(name);
+            FileInPaths.remove(name);
+            ImageDisplay.getInstance().removeImage(name);
+            if (test == null) return;
+            // boolean have= false;
+            long HashCode = ImageDelete.hashBitmap(test);
+            hashMap.remove(HashCode);
+
+        }
+
+    }
+
+    @Override
     public void removeImageUpdate(String input) {
         FileInPaths.remove(input);
     }
@@ -331,7 +412,14 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
 
     @Override
     public void removeInHash(String name) {
+        new File(name);
 
+        Bitmap test = BitmapFactory.decodeFile(name);
+
+        if (test == null) return;
+        // boolean have= false;
+        long HashCode = ImageDelete.hashBitmap(test);
+        hashMap.remove(HashCode);
     }
 
     @Override
@@ -345,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
 
     @Override
     public void Holding(boolean isHolding) {
-        com.example.photosGroup3.ImageDisplay instance = com.example.photosGroup3.ImageDisplay.getInstance();
+        ImageDisplay instance = ImageDisplay.getInstance();
         if (isHolding) {
             chooseNavbar.setVisibility(View.VISIBLE);
             navbar.setVisibility(View.INVISIBLE);
@@ -454,10 +542,6 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
     }
 
 
-
-
-
-
     private void changeFileInFolder(String Dir, String oldName, String newName) {
 
         File sdFile = new File(Dir);
@@ -552,10 +636,6 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
         return FileInPaths;
     }
 
-    @Override
-    public void removeImageUpdate(String[] input) {
-
-    }
 
     protected class NavLinearLayouts implements View.OnClickListener {
         public int thisIndex;
@@ -600,6 +680,137 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
             }
         }
 
+    }
+
+    public static boolean checkInHash(String name) {
+        Bitmap test = BitmapFactory.decodeFile(name);
+
+        if (test == null) return false;
+        // boolean have= false;
+        long HashCode = ImageDelete.hashBitmap(test);
+        if (!hashMap.containsKey(HashCode)) {
+
+            hashMap.put(HashCode, test);
+            return true;
+        } else {
+            ImageDelete.DeleteImage(name);
+        }
+        return false;
+
+    }
+
+    private class AlbumChoosingDialog extends Dialog {
+
+
+        public AlbumChoosingDialog(@NonNull Context context) {
+            super(context);
+            @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.album_choosing, null);
+
+            ImageButton backBtn = layout.findViewById(R.id.album_choosing_back);
+            backBtn.setOnClickListener(view -> dismiss());
+
+            GridView imageList = layout.findViewById(R.id.album_choosing_list);
+            imageList.setAdapter(new AlbumChoosingAdapter());
+
+            imageList.setOnItemClickListener((adapterView, view, i, l) -> {
+                view.setBackgroundResource(R.drawable.custom_row_album);
+
+                Drawable buttonDrawable = view.getBackground();
+                buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+                DrawableCompat.setTint(buttonDrawable, context.getResources().getColor(R.color.fullScreenBtn));
+                view.setBackground(buttonDrawable);
+                MoveOrCopy dialog = new MoveOrCopy(context, new MoveOrCopy.MoveOrCopyCallBack() {
+                    @Override
+                    public void dismissCallback(String method) {
+                        view.setBackgroundResource(android.R.color.transparent);
+
+                        view.setBackgroundTintList(null);
+                        TextView imgCount = view.findViewById(R.id.album_images_count);
+                        imgCount.setText(String.format(context.getString(R.string.album_image_count), AlbumsFragment.albumList.get(i).imagePaths.size()));
+                        if (method.equals("remove")) {
+                            ImageDisplay ic = ImageDisplay.getInstance();
+                            clearChooseToDeleteInList();
+                            ic.clearClicked();
+                            dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void copiedCallback(String newImagePath) {
+                        AlbumsFragment.albumList.get(i).imagePaths.add(newImagePath);
+                    }
+
+                    @Override
+                    public void removedCallback(String oldImagePath, String newImagePath) {
+                        ImageDisplay.getInstance().removeImage(oldImagePath);
+                        AlbumsFragment.albumList.get(i).imagePaths.add(newImagePath);
+                    }
+
+
+                }, AlbumsFragment.albumList.get(i), chooseToDeleteInList());
+                dialog.show();
+            });
+
+            setContentView(layout);
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(Objects.requireNonNull(getWindow()).getAttributes());
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+            getWindow().setAttributes(layoutParams);
+        }
+
+        private class AlbumChoosingAdapter extends BaseAdapter {
+            ArrayList<Album> albumList;
+
+            public AlbumChoosingAdapter() {
+                this.albumList = AlbumsFragment.albumList;
+            }
+
+            @Override
+            public int getCount() {
+                return albumList.size();
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return albumList.get(i);
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                AlbumChoosingAdapter.ViewHolder viewHolder;
+                if (view == null) {
+                    view = getLayoutInflater().inflate(R.layout.row_album, viewGroup, false);
+                    viewHolder = new AlbumChoosingAdapter.ViewHolder();
+                    viewHolder.albumName = view.findViewById(R.id.album_name);
+                    viewHolder.albumImageCount = view.findViewById(R.id.album_images_count);
+                    viewHolder.imageView = view.findViewById(R.id.album_image);
+                    view.setTag(viewHolder);
+                } else {
+                    viewHolder = (AlbumChoosingAdapter.ViewHolder) view.getTag();
+                }
+                viewHolder.albumName.setText(albumList.get(i).name);
+                viewHolder.albumImageCount.setText(String.format(context.getString(R.string.album_image_count), albumList.get(i).imagePaths.size()));
+                view.setBackgroundTintList(null);
+                if (albumList.get(i).name.equals(AlbumsFragment.favourite)) {
+                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_favorite_24);
+                } else {
+                    viewHolder.imageView.setImageResource(R.drawable.ic_baseline_folder_24);
+                }
+                return view;
+            }
+
+            private class ViewHolder {
+                TextView albumName;
+                TextView albumImageCount;
+                ImageView imageView;
+            }
+        }
     }
 
 }

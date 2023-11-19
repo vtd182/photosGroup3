@@ -52,8 +52,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         holder.albumName.setText(albumList.get(position).name);
 
         holder.albumImagesCount.setText(String.format(context.getString(R.string.album_image_count), albumList.get(position).imagePaths.size()));
-
-
+        View.OnClickListener displayAlbum = view -> {
+            int pos = holder.getBindingAdapterPosition();
+            ((MainActivity) context).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, AlbumDisplayFragment.newInstance(albumList.get(pos)), null)
+                    .setReorderingAllowed(true)
+                    .commit();
+        };
+        holder.itemView.setOnClickListener(displayAlbum);
         setBackgroundColor(holder.itemView, null);
 
         // Nếu là album Favourite

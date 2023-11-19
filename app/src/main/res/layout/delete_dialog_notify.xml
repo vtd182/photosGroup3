@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:theme="@style/dBackground"
+    android:paddingHorizontal="10dp"
+    android:paddingTop="20dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_marginBottom="12dp"
+        android:textStyle="bold"
+        android:id="@+id/titleBox"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/deleteNotify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Do you want to delete 0 image(s) permanently in device ?"
+        android:layout_marginVertical="10dp"
+        android:textSize="16dp"
+        android:textAlignment="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        >
+            <ImageButton
+                android:theme="@style/dSelectedBtn"
+                android:id="@+id/cancel_delete"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_baseline_close_24"
+                android:layout_marginRight="20dp"
+                />
+
+            <ImageButton
+                android:theme="@style/dSelectedBtn"
+                android:id="@+id/confirmDelete"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_baseline_check_24" />
+
+    </LinearLayout>
+
+</LinearLayout>

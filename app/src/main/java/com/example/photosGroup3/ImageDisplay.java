@@ -70,7 +70,7 @@ import java.util.Objects;
 * */
 
 
-public class ImageDisplay extends Fragment {
+public class ImageDisplay extends Fragment  implements chooseAndDelete {
     Context context;
 
 
@@ -643,6 +643,118 @@ public class ImageDisplay extends Fragment {
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT,getUri(Environment.DIRECTORY_PICTURES));
         someActivityResultLauncher.launch(intent);
+    }
+
+    public void notifyChanged()
+    {
+        customAdapter.notifyDataSetChanged();
+        listAdapter.notifyDataSetChanged();
+    }
+
+    public void addNewImage(String imagePath,int status){
+        File file = new File(imagePath);
+        if (!file.exists()) //Extra check, Just to validate the given path
+        {
+            return;
+        }
+        if(!images.contains(imagePath) )
+        {
+            if(status==0)
+            {
+                if(!MainActivity.checkInHash((imagePath)))
+                {
+                    return;
+                }
+            }
+            ExifInterface intf = null;
+            try {
+                intf = new ExifInterface(imagePath);
+                Date lastModDate = new Date(file.lastModified());
+
+
+                size.add(0,((Number) file.length()).intValue());
+                dates.add(0,lastModDate.toString());
+//                        Log.i("PHOTO DATE", "Dated : " + dateString); //Display dateString. You can do/use it your own way
+            } catch (IOException ignored) {
+
+            }
+            if (intf == null) {
+                Date lastModDate = new Date(file.lastModified());
+                dates.add(0,lastModDate.toString());
+            }
+            images.add(0,imagePath);
+            names.add(0,getDisplayName(imagePath));
+            notifyChanged();
+        }
+    }
+
+    public void removeImage(String name){
+        int index=this.images.indexOf(name);
+        if(index != -1)
+        {
+            ((MainActivity ) requireContext()).removeInHash(name);
+            this.images.remove(index);
+            this.names.remove(index);
+            this.dates.remove(index);
+            this.size.remove(index);
+            notifyChanged();
+        }
+    }
+
+    @Override
+    public  void deleteClicked()
+    {
+        isHolding =false;
+        ((MainActivity) requireContext()).Holding(isHolding);
+        selectedImages = ((MainActivity) requireContext()).chooseToDeleteInList();
+        notifyChangeGridLayout();
+    }
+
+    @Override
+    public void deleteClicked(String file) {
+        ((MainActivity) requireContext()).removeImageUpdate(file);
+        notifyChangeGridLayout();
+    }
+
+    @Override
+    public void  clearClicked()
+    {
+        isHolding =false;
+        ((MainActivity) requireContext()).Holding(isHolding);
+        // Collections.fill(checkPhoto,Boolean.FALSE);
+
+
+        notifyChangeGridLayout();
+
+        customAdapter.notifyDataSetChanged();
+        listAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void selectAllClicked() {
+        isHolding =true;
+        ((MainActivity) requireContext()).Holding(isHolding);
+//        if(selectedImages.size()==images.size())
+//        {
+//            //selectedImages.clear();
+//           // Collections.fill(checkPhoto,Boolean.FALSE);
+//
+//        }
+//        else
+//        {
+//            //Collections.fill(checkPhoto,Boolean.TRUE);
+//
+//        }
+//        else
+        selectedImages= ((MainActivity) requireContext()).chooseToDeleteInList();
+        ((MainActivity) requireContext()).SelectedTextChange();
+        notifyChangeGridLayout();
+    }
+
+    @Override
+    public void renameClicked(String file, String newFile) {
+        ((MainActivity) requireContext()).renameImageUpdate(file, newFile);
     }
 
     // Android 10+
