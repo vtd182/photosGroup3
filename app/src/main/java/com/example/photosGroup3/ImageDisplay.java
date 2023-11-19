@@ -48,6 +48,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.photosGroup3.Callback.chooseAndDelete;
 import com.example.photosGroup3.Utils.ImageDate;
+import com.example.photosGroup3.Utils.ImageName;
 import com.example.photosGroup3.Utils.ImageUltility;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -82,12 +83,14 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
     String fullNameFile = "";
 
     ImageButton changeBtn;
+    ImageButton sortBtn;
     FloatingActionButton fab_camera, fab_expand, fab_url;
     GridView gridView;
     CardView cardView;
     ArrayList<String> names = new ArrayList<>();
     int numCol = 2;
     ArrayList<String> images;
+    String sortType="Date";
     String namePictureShoot = "";
     Bundle myStateInfo;
     LayoutInflater myStateInflater;
@@ -96,6 +99,7 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
     ImageDisplay.ListAdapter listAdapter = null;
 
     ArrayList<ImageDate> imgDates;
+    ArrayList<ImageName> imgNames;
     ArrayList<String> dates;
     ArrayList<Integer> size;
 
@@ -364,6 +368,7 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
         gridView = view.findViewById(R.id.gridView);
         changeBtn = view.findViewById(R.id.resizeView);
+        sortBtn = view.findViewById(R.id.sortView);
         cardView = view.findViewById(R.id.cardView);
         fab_camera = view.findViewById(R.id.fab_Camera);
         fab_expand = view.findViewById(R.id.fab_expand);
@@ -421,6 +426,19 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
                 gridView.setAdapter(customAdapter);
             }
             gridView.setNumColumns(numCol);
+        });
+
+        sortBtn.setOnClickListener(view1 -> {
+            if (sortType.equals("Date")){
+                sortType="Name";
+                Toast.makeText(getContext(), "Sort by name", Toast.LENGTH_SHORT).show();
+            }
+            else if (sortType.equals("Name")){
+                sortType="Date";
+                Toast.makeText(getContext(), "Sort by date", Toast.LENGTH_SHORT).show();
+            }
+            sortImage();
+            notifyChangeGridLayout();
         });
 
         fab_url.setOnClickListener(view1 -> showInputDialogBox());
@@ -605,6 +623,28 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
             dates.add(temp.dayToString());
         }
 
+//        Collections.sort(images);
+        //checkPhoto=new ArrayList<Boolean>(Arrays.asList(new Boolean[images.size()]));
+        //Collections.fill(checkPhoto, Boolean.FALSE);
+
+        //create name array
+        names = new ArrayList<>();
+        imgNames = new ArrayList<>();
+
+        for (int i = 0; i < this.images.size(); i++) {
+
+            // get name from file ===================================
+            ImageName temp = new ImageName(this.images.get(i), getDisplayName(this.images.get(i)));
+            imgNames.add(temp);
+            String name = getDisplayName(this.images.get(i));
+            names.add(name);
+            // ====================================================
+        }
+        sortImage();
+    }
+
+    private void sortImage(){
+        if (sortType.equals("Date")){
         //sort obj
         Collections.sort(imgDates);
         Collections.reverse(imgDates);
@@ -612,22 +652,16 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         //change images after sort
         for (int i = 0; i < imgDates.size(); i++) {
             this.images.set(i, imgDates.get(i).getImage());
-
         }
+        }
+        else if (sortType.equals("Name")){
+            Collections.sort(imgNames);
+            Collections.reverse(imgNames);
 
-//        Collections.sort(images);
-        //checkPhoto=new ArrayList<Boolean>(Arrays.asList(new Boolean[images.size()]));
-        //Collections.fill(checkPhoto, Boolean.FALSE);
-
-        //create name array
-        names = new ArrayList<>();
-
-        for (int i = 0; i < this.images.size(); i++) {
-
-            // get name from file ===================================
-            String name = getDisplayName(this.images.get(i));
-            names.add(name);
-            // ====================================================
+            //change images after sort
+            for (int i = 0; i < imgNames.size(); i++) {
+                this.images.set(i, imgNames.get(i).getImage());
+            }
         }
     }
 
