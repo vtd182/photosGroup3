@@ -211,6 +211,35 @@ public class MainActivity extends AppCompatActivity implements MainCallBack {
             AlbumChoosingDialog dialog = new AlbumChoosingDialog(context);
             dialog.show();
         });
+        addToFavoriteBtn.setOnClickListener(view -> {
+            MoveOrCopy dialog = new MoveOrCopy(context, new MoveOrCopy.MoveOrCopyCallBack() {
+                @Override
+                public void dismissCallback(String method) {
+                    if (method.equals("remove")) {
+                        ImageDisplay ic = ImageDisplay.getInstance();
+                        clearChooseToDeleteInList();
+                        ic.clearClicked();
+                    }
+                }
+
+                @Override
+                public void copiedCallback(String newImagePath) {
+                    assert AlbumsFragment.favoriteAlbum() != null;
+                    AlbumsFragment.favoriteAlbum().imagePaths.add(newImagePath);
+                }
+
+                @Override
+                public void removedCallback(String oldImagePath, String newImagePath) {
+                    ImageDisplay.getInstance().removeImage(oldImagePath);
+                    assert AlbumsFragment.favoriteAlbum() != null;
+                    AlbumsFragment.favoriteAlbum().imagePaths.add(newImagePath);
+                }
+
+
+            }, AlbumsFragment.favoriteAlbum(), chooseToDeleteInList());
+            dialog.show();
+        });
+
 
         arrIcon[0] = R.drawable.ic_baseline_photo;
         arrIcon[1] = R.drawable.ic_baseline_photo_library;
