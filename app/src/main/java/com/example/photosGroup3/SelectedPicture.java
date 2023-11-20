@@ -112,6 +112,7 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
 
 
         infoBtn = findViewById(R.id.infoBtn);
+        infoBtn.setOnClickListener(view -> showCustomDialogBoxInformation());
 
         editBtn = findViewById(R.id.editBtn);
 
@@ -253,5 +254,44 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
         aa.notifyDataSetChanged();
     }
 
+    @SuppressLint("SetTextI18n")
+    private void showCustomDialogBoxInformation() {
+        final Dialog customDialog = new Dialog(this);
+        customDialog.setTitle("Information of Picture");
+
+        customDialog.setContentView(R.layout.infomation_picture_dialog);
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+//
+        ((TextView) customDialog.findViewById(R.id.photoName))
+                .setText(shortenName(ImageDisplay.getDisplayName(paths[currentPosition])));
+        ((TextView) customDialog.findViewById(R.id.photoPath))
+                .setText(paths[currentPosition]);
+        ((TextView) customDialog.findViewById(R.id.photoLastModified))
+                .setText(dates[currentPosition]);
+        ((TextView) customDialog.findViewById(R.id.photoSize))
+                .setText(Math.round(size[currentPosition] * 1.0 / 1024) + " KB");
+//        Toast.makeText(this, imagesSize[currentPosition]+"", Toast.LENGTH_SHORT).show();
+        customDialog.findViewById(R.id.ok_button)
+                .setOnClickListener(view -> {
+                    //donothing
+                    customDialog.dismiss();
+                });
+        customDialog.show();
+    }
+    public String shortenName(String name) {
+        String[] ArrayName = name.split("\\.");
+        String displayName;
+
+        if (ArrayName[0].length() > 25) {
+            displayName = ArrayName[0].substring(0, 10);
+            displayName += "...";
+            displayName += ArrayName[0].substring(ArrayName[0].length() - 10);
+        } else {
+            displayName = ArrayName[0];
+        }
+        displayName += "." + ArrayName[1];
+        return displayName;
+    }
 
 }
