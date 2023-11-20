@@ -1,7 +1,6 @@
 package com.example.photosGroup3;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -25,11 +24,7 @@ import java.util.ArrayList;
 public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.ViewHolder> implements ZoomCallBack {
     ArrayList<viewPagerItem> arrayItems;
     SelectedPicture main;
-    //Zoom =====================
     private static final String TAG = "Touch";
-    @SuppressWarnings("unused")
-    Context context;
-
     @SuppressLint("StaticFieldLeak")
     static viewPagerAdapter instance = null;
 
@@ -40,13 +35,9 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
     static final int DRAG = 1;
     static final int ZOOM = 2;
     int mode = NONE;
-
-    // these PointF objects are used to record the point(s) the user is touching
     PointF start = new PointF();
     PointF mid = new PointF();
     float oldDist = 1f;
-
-    //Zoom =============
 
     ImageView view;
 
@@ -71,7 +62,7 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.full_screen_picture, parent, false);
+                .inflate(R.layout.full_creen_picture, parent, false);
 
         return new ViewHolder(view);
     }
@@ -193,9 +184,33 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
 
     @Override
     public Bitmap RotateDegree(String currentImg, float degree, int pos) {
-        return null;
-    }
 
+        if (rotatePos != pos) {
+            totalRotate = 0;
+            rotatePos = pos;
+        }
+        if (degree == 0) {
+            totalRotate = degree;
+        } else {
+            totalRotate += degree;
+        }
+
+        ImageView setimg = null;
+        for (int i = 0; i < TemplateView.size(); i++) {
+            if (TemplateView.get(i).getAdapterPosition() == pos) {
+                setimg = TemplateView.get(i).itemView.findViewById(R.id.imageView);
+            }
+        }
+
+
+        File imgFile = new File(currentImg);
+        Bitmap imageShoot = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        imageShoot = ImageUltility.rotateImage(imageShoot, totalRotate);
+
+        assert setimg != null;
+        setimg.setImageBitmap(imageShoot);
+        return imageShoot;
+    }
 
     @Override
     public void setImageView(String currentImg, int pos) {

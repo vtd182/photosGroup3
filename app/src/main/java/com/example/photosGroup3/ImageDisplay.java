@@ -16,7 +16,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-//noinspection ExifInterface
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -63,65 +62,40 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
-/*
-* File imgFile= new File(Images.get(position));
-        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        holder.imageItem.setImageBitmap(myBitmap);
-*
-* */
-
-
-public class ImageDisplay extends Fragment  implements chooseAndDelete {
+public class ImageDisplay extends Fragment implements chooseAndDelete {
     Context context;
-
-
     @SuppressLint("StaticFieldLeak")
     private static volatile ImageDisplay INSTANCE = null;
     @SuppressLint("StaticFieldLeak")
     private static ImageDisplay MAIN_INSTANCE = null;
-
     String fullNameFile = "";
-
     ImageButton changeBtn;
-    ImageButton sortBtn;
     FloatingActionButton fab_camera, fab_expand, fab_url;
     GridView gridView;
     CardView cardView;
     ArrayList<String> names = new ArrayList<>();
     int numCol = 2;
     ArrayList<String> images;
-    String sortType="Date";
     String namePictureShoot = "";
     Bundle myStateInfo;
     LayoutInflater myStateInflater;
-    ViewGroup myStatecontainer;
-    ImageDisplay.CustomAdapter customAdapter = null;
-    ImageDisplay.ListAdapter listAdapter = null;
-
+    ViewGroup myStateContainer;
+    CustomAdapter customAdapter = null;
+    ListAdapter listAdapter = null;
     ArrayList<ImageDate> imgDates;
     ArrayList<ImageName> imgNames;
     ArrayList<String> dates;
     ArrayList<Integer> size;
-
     TableLayout header;
     LongClickCallback callback = null;
-
-
     public boolean isHolding = false;
     public static boolean isMain = true;
-
     ArrayList<String> selectedImages = new ArrayList<>();
 
-
-    //universal-image-loader
-    // Create default options which will be used for every
-    //  displayImage(...) call if no options will be passed to this method
-
+    String sortType="Date";
+    ImageButton sortBtn;
     private ImageDisplay() {
-        // Required empty public constructors
     }
-
-    // TODO: Rename and change types and number of parameters
 
     public static ImageDisplay getInstance() {
         if (INSTANCE == null) {
@@ -156,9 +130,7 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
     public class CustomAdapter extends BaseAdapter {
         private final ArrayList<String> imagePhotos;
-
         private final LayoutInflater layoutInflater;
-
         private class ViewHolder {
             ImageView imageView;
             CheckBox check;
@@ -188,7 +160,6 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder viewHolder;
-//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             if (view == null) {
                 view = layoutInflater.inflate(R.layout.row_item, viewGroup, false);
                 viewHolder = new ViewHolder();
@@ -197,7 +168,6 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
-
             }
             if (isHolding) {
                 viewHolder.check.setVisibility(View.VISIBLE);
@@ -210,18 +180,17 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
                             if (b) {
                                 if (!selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "choose");
-                                    //selectedImages.add(imagePhotos.get(currentView));
+                                    selectedImages = ((MainActivity) requireContext()).
+                                            adjustChooseToDeleteInList(imagePhotos.get(i),
+                                                    "choose");
                                 }
 
                             } else {
                                 if (selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "unchoose");
-
-                                    //selectedImages.remove(imagePhotos.get(currentView));
+                                    selectedImages = ((MainActivity) requireContext()).
+                                            adjustChooseToDeleteInList(imagePhotos.get(i),
+                                                    "unchoose");
                                 }
-
-
                             }
                             ((MainActivity) requireContext()).SelectedTextChange();
                             notifyChangeGridLayout();
@@ -234,19 +203,11 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
                 viewHolder.check.setVisibility(View.INVISIBLE);
             }
             File imgFile = new File(imagePhotos.get(i));
-            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse("file://" + imgFile.getAbsolutePath())), viewHolder.imageView);
-
-
+            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse(
+                    "file://" + imgFile.getAbsolutePath())),
+                    viewHolder.imageView);
             return view;
         }
-
-
-    }
-
-    public interface LongClickCallback {
-        void onLongClick();
-
-        void afterLongClick();
     }
 
     public void setLongClickCallBack(LongClickCallback callback) {
@@ -311,31 +272,30 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
                             if (b) {
                                 if (!selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "choose");
-                                    //selectedImages.add(imagePhotos.get(currentView));
+                                    selectedImages = ((MainActivity) requireContext()).
+                                            adjustChooseToDeleteInList(imagePhotos.get(i),
+                                                    "choose");
                                 }
 
                             } else {
                                 if (selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(imagePhotos.get(i), "unhoose");
-
-                                    //selectedImages.remove(imagePhotos.get(currentView));
+                                    selectedImages = ((MainActivity) requireContext()).
+                                            adjustChooseToDeleteInList(imagePhotos.get(i),
+                                                    "unhoose");
                                 }
-
-
                             }
                             ((MainActivity) requireContext()).SelectedTextChange();
                             notifyChangeGridLayout();
-
                         }
                     }
-
                 });
             } else {
                 viewHolder.check.setVisibility(View.INVISIBLE);
             }
             File imgFile = new File(imagePhotos.get(i));
-            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse("file://" + imgFile.getAbsolutePath())), viewHolder.imageView);
+            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse(
+                    "file://" + imgFile.getAbsolutePath())),
+                    viewHolder.imageView);
             return view;
         }
     }
@@ -355,43 +315,41 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
     @SuppressLint("MissingInflatedId")
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-        //Toast.makeText(getContext(),"ImageDisplay oncreatview",Toast.LENGTH_SHORT).show();
         myStateInflater = inflater;
-        myStatecontainer = container;
+        myStateContainer = container;
         myStateInfo = savedInstanceState;
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_image_display, container, false);
 
         gridView = view.findViewById(R.id.gridView);
         changeBtn = view.findViewById(R.id.resizeView);
-        sortBtn = view.findViewById(R.id.sortView);
         cardView = view.findViewById(R.id.cardView);
         fab_camera = view.findViewById(R.id.fab_Camera);
+        sortBtn = view.findViewById(R.id.sortView);
         fab_expand = view.findViewById(R.id.fab_expand);
         fab_url = view.findViewById(R.id.fab_url);
 
         if (customAdapter == null) {
-            customAdapter = new ImageDisplay.CustomAdapter(images, requireActivity());
+            customAdapter = new CustomAdapter(images, requireActivity());
 
         } else {
             customAdapter.notifyDataSetChanged();
         }
         if (listAdapter == null) {
-            listAdapter = new ImageDisplay.ListAdapter(names, images, requireActivity());
+            listAdapter = new ListAdapter(names, images, requireActivity());
         } else {
             listAdapter.notifyDataSetChanged();
         }
 
         gridView.setAdapter(customAdapter);
-
         gridView.setOnItemClickListener((adapterView, view15, i, l) -> {
+
             if (!isHolding) {
                 someActivityResultLauncher.launch(new Intent(getActivity(), SelectedPicture.class)
-                        .putExtra("size", size)//này là em bỏ qua cái selected nè
+                        .putExtra("size", size)
                         .putExtra("images", images)
                         .putExtra("dates", dates)
                         .putExtra("pos", i));
@@ -406,11 +364,13 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
             String selectedName = images.get(i);
 
-            selectedImages = ((MainActivity) requireContext()).adjustChooseToDeleteInList(selectedName, "choose");
+            selectedImages = ((MainActivity) requireContext()).
+                    adjustChooseToDeleteInList(selectedName, "choose");
 
             ((MainActivity) requireContext()).SelectedTextChange();
 
             notifyChangeGridLayout();
+
 
             return true;
         });
@@ -441,6 +401,9 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
             notifyChangeGridLayout();
         });
 
+
+        fab_camera.setOnClickListener(view12 -> openCamera());
+
         fab_url.setOnClickListener(view1 -> showInputDialogBox());
         fab_url.setVisibility(View.INVISIBLE);
         fab_camera.setVisibility(View.INVISIBLE);
@@ -454,19 +417,14 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
             }
         });
 
-        fab_camera.setOnClickListener(view12 -> {
-            openCamera();
-        });
-
         header = view.findViewById(R.id.header);
 
         return view;
     }
 
-    private void showInputDialogBox()
-    {
-        final String[] url_input = {"",""};
-        final Dialog customDialog = new Dialog( getContext());
+    private void showInputDialogBox() {
+        final String[] url_input = {"", ""};
+        final Dialog customDialog = new Dialog(getContext());
         customDialog.setTitle("Delete confirm");
 
         customDialog.setContentView(R.layout.url_download_diagbox);
@@ -481,9 +439,9 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         customDialog.findViewById(R.id.download_url_confirm)
                 .setOnClickListener(view -> {
                     url_input[0] = ((EditText) customDialog.findViewById(R.id.download_url_input)).getText().toString();
-                    url_input[1] =((EditText) customDialog.findViewById(R.id.download_url_rename)).getText().toString();
+                    url_input[1] = ((EditText) customDialog.findViewById(R.id.download_url_rename)).getText().toString();
                     Toast.makeText(INSTANCE.getContext(), url_input[0], Toast.LENGTH_SHORT).show();
-                    DownloadImageFromURL(url_input[0].trim(),url_input[1].trim());
+                    DownloadImageFromURL(url_input[0].trim(), url_input[1].trim());
 
                     customDialog.dismiss();
                 });
@@ -491,43 +449,81 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         customDialog.show();
     }
 
-    private void DownloadImageFromURL(String input,String fileName)
-    {
+    private void DownloadImageFromURL(String input, String fileName) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(input));
 
-        String fileExtension=input.substring(input.lastIndexOf("."));
-        while ( fileExtension.charAt(fileExtension.length() - 1) == '\n') {
+        String fileExtension = input.substring(input.lastIndexOf("."));
+        while (fileExtension.charAt(fileExtension.length() - 1) == '\n') {
             fileExtension = fileExtension.substring(0, fileExtension.length() - 1);
         }
 
-        if (fileName.length()==0){
-            fileName= (new Date()).getTime() +"";
+        if (fileName.length() == 0) {
+            fileName = (new Date()).getTime() + "";
 
         }
-        fullNameFile=((MainActivity) requireContext()).getPictureDirectory() + "/" + fileName + fileExtension;
+        fullNameFile = ((MainActivity) requireContext()).getPictureDirectory() + "/" + fileName + fileExtension;
         request.setDescription("Downloading " + input + "...");
         request.setTitle(input);
-        // request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationUri(Uri.fromFile(new File(fullNameFile)));
         DownloadManager manager = (DownloadManager) INSTANCE.requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-        Notification noti = new NotificationCompat.Builder(requireContext(),"Download " +fullNameFile )
+        Notification noti = new NotificationCompat.Builder(requireContext(), "Download " + fullNameFile)
                 .setContentText("Downloaded item")
                 .setSmallIcon(R.drawable.ic_launcher_background).build();
     }
 
-    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+
+    @Override
+    public void deleteClicked() {
+
+        isHolding = false;
+        ((MainActivity) requireContext()).Holding(isHolding);
+        selectedImages = ((MainActivity) requireContext()).chooseToDeleteInList();
+        notifyChangeGridLayout();
+    }
+
+    @Override
+    public void deleteClicked(String file) {
+        ((MainActivity) requireContext()).removeImageUpdate(file);
+        notifyChangeGridLayout();
+    }
+
+    @Override
+    public void renameClicked(String file, String newFile) {
+        ((MainActivity) requireContext()).renameImageUpdate(file, newFile);
+    }
+
+    @Override
+    public void clearClicked() {
+        isHolding = false;
+        ((MainActivity) requireContext()).Holding(isHolding);
+        notifyChangeGridLayout();
+        customAdapter.notifyDataSetChanged();
+        listAdapter.notifyDataSetChanged();
+    }
+
+    public void notifyChanged() {
+        customAdapter.notifyDataSetChanged();
+        listAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void selectAllClicked() {
+        isHolding = true;
+        ((MainActivity) requireContext()).Holding(isHolding);
+        selectedImages = ((MainActivity) requireContext()).chooseToDeleteInList();
+        ((MainActivity) requireContext()).SelectedTextChange();
+        notifyChangeGridLayout();
+    }
+
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    //                        ((MainActivity) getContext()).readAgain();
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-
                         File imgFile = new File(namePictureShoot);
                         Bitmap imageShoot = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         imageShoot = ImageUltility.rotateImage(imageShoot, 90);
@@ -544,9 +540,7 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
                         if (!images.contains(imgFile.getAbsolutePath())) {
                             images.add(imgFile.getAbsolutePath());
                             names.add(getDisplayName(imgFile.getAbsolutePath()));
-
                         }
-
                         notifyChangeGridLayout();
                         setImagesData(((MainActivity) context).getFileinDir());
 
@@ -556,13 +550,25 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
             });
 
 
+    private void openCamera() {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{
+                    Manifest.permission.CAMERA
+            }, 100);
+        }
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(Environment.DIRECTORY_PICTURES));
+        someActivityResultLauncher.launch(intent);
+    }
+
     public static String generateFileName() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS");
         return now.format(myFormat);
     }
 
-    // Android 10+
     private Uri getUri(String path) {
 
         ContentValues values = new ContentValues();
@@ -589,12 +595,11 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
 
     public void setImagesData(ArrayList<String> images) {
         this.images = images;
-        //get date
         ArrayList<Date> listDate = new ArrayList<>();
         size = new ArrayList<>(this.images.size());
         for (int i = 0; i < this.images.size(); i++) {
             File file = new File(this.images.get(i));
-            if (file.exists()) //Extra check, Just to validate the given path
+            if (file.exists())
             {
                 ExifInterface intf = null;
                 try {
@@ -616,43 +621,40 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         imgDates = new ArrayList<>();
 
         dates = new ArrayList<>();
-        //get object
         for (int i = 0; i < this.images.size(); i++) {
             ImageDate temp = new ImageDate(this.images.get(i), listDate.get(i));
             imgDates.add(temp);
             dates.add(temp.dayToString());
         }
 
-//        Collections.sort(images);
-        //checkPhoto=new ArrayList<Boolean>(Arrays.asList(new Boolean[images.size()]));
-        //Collections.fill(checkPhoto, Boolean.FALSE);
-
-        //create name array
+//        Collections.sort(imgDates);
+//        Collections.reverse(imgDates);
+//        for (int i = 0; i < imgDates.size(); i++) {
+//            this.images.set(i, imgDates.get(i).getImage());
+//
+//        }
         names = new ArrayList<>();
         imgNames = new ArrayList<>();
 
         for (int i = 0; i < this.images.size(); i++) {
-
-            // get name from file ===================================
             ImageName temp = new ImageName(this.images.get(i), getDisplayName(this.images.get(i)));
             imgNames.add(temp);
             String name = getDisplayName(this.images.get(i));
             names.add(name);
-            // ====================================================
         }
         sortImage();
     }
 
     private void sortImage(){
         if (sortType.equals("Date")){
-        //sort obj
-        Collections.sort(imgDates);
-        Collections.reverse(imgDates);
+            //sort obj
+            Collections.sort(imgDates);
+            Collections.reverse(imgDates);
 
-        //change images after sort
-        for (int i = 0; i < imgDates.size(); i++) {
-            this.images.set(i, imgDates.get(i).getImage());
-        }
+            //change images after sort
+            for (int i = 0; i < imgDates.size(); i++) {
+                this.images.set(i, imgDates.get(i).getImage());
+            }
         }
         else if (sortType.equals("Name")){
             Collections.sort(imgNames);
@@ -665,38 +667,15 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         }
     }
 
-    private void openCamera()  {
-        // Ask permission
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(),new String[]{
-                    Manifest.permission.CAMERA
-            },100);
-        }
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,getUri(Environment.DIRECTORY_PICTURES));
-        someActivityResultLauncher.launch(intent);
-    }
-
-    public void notifyChanged()
-    {
-        customAdapter.notifyDataSetChanged();
-        listAdapter.notifyDataSetChanged();
-    }
-
-    public void addNewImage(String imagePath,int status){
+    public void addNewImage(String imagePath, int status) {
         File file = new File(imagePath);
-        if (!file.exists()) //Extra check, Just to validate the given path
+        if (!file.exists())
         {
             return;
         }
-        if(!images.contains(imagePath) )
-        {
-            if(status==0)
-            {
-                if(!MainActivity.checkInHash((imagePath)))
-                {
+        if (!images.contains(imagePath)) {
+            if (status == 0) {
+                if (!MainActivity.checkInHash((imagePath))) {
                     return;
                 }
             }
@@ -706,27 +685,25 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
                 Date lastModDate = new Date(file.lastModified());
 
 
-                size.add(0,((Number) file.length()).intValue());
-                dates.add(0,lastModDate.toString());
-//                        Log.i("PHOTO DATE", "Dated : " + dateString); //Display dateString. You can do/use it your own way
+                size.add(0, ((Number) file.length()).intValue());
+                dates.add(0, lastModDate.toString());
             } catch (IOException ignored) {
 
             }
             if (intf == null) {
                 Date lastModDate = new Date(file.lastModified());
-                dates.add(0,lastModDate.toString());
+                dates.add(0, lastModDate.toString());
             }
-            images.add(0,imagePath);
-            names.add(0,getDisplayName(imagePath));
+            images.add(0, imagePath);
+            names.add(0, getDisplayName(imagePath));
             notifyChanged();
         }
     }
 
-    public void removeImage(String name){
-        int index=this.images.indexOf(name);
-        if(index != -1)
-        {
-            ((MainActivity ) requireContext()).removeInHash(name);
+    public void removeImage(String name) {
+        int index = this.images.indexOf(name);
+        if (index != -1) {
+            ((MainActivity) requireContext()).removeInHash(name);
             this.images.remove(index);
             this.names.remove(index);
             this.dates.remove(index);
@@ -735,65 +712,8 @@ public class ImageDisplay extends Fragment  implements chooseAndDelete {
         }
     }
 
-    @Override
-    public  void deleteClicked()
-    {
-        isHolding =false;
-        ((MainActivity) requireContext()).Holding(isHolding);
-        selectedImages = ((MainActivity) requireContext()).chooseToDeleteInList();
-        notifyChangeGridLayout();
+    public interface LongClickCallback {
+        void onLongClick();
+        void afterLongClick();
     }
-
-    @Override
-    public void deleteClicked(String file) {
-        ((MainActivity) requireContext()).removeImageUpdate(file);
-        notifyChangeGridLayout();
-    }
-
-    @Override
-    public void  clearClicked()
-    {
-        isHolding =false;
-        ((MainActivity) requireContext()).Holding(isHolding);
-        // Collections.fill(checkPhoto,Boolean.FALSE);
-
-
-        notifyChangeGridLayout();
-
-        customAdapter.notifyDataSetChanged();
-        listAdapter.notifyDataSetChanged();
-
-    }
-
-    @Override
-    public void selectAllClicked() {
-        isHolding =true;
-        ((MainActivity) requireContext()).Holding(isHolding);
-//        if(selectedImages.size()==images.size())
-//        {
-//            //selectedImages.clear();
-//           // Collections.fill(checkPhoto,Boolean.FALSE);
-//
-//        }
-//        else
-//        {
-//            //Collections.fill(checkPhoto,Boolean.TRUE);
-//
-//        }
-//        else
-        selectedImages= ((MainActivity) requireContext()).chooseToDeleteInList();
-        ((MainActivity) requireContext()).SelectedTextChange();
-        notifyChangeGridLayout();
-    }
-
-    @Override
-    public void renameClicked(String file, String newFile) {
-        ((MainActivity) requireContext()).renameImageUpdate(file, newFile);
-    }
-
-    // Android 10+
-
-
-
-
 }

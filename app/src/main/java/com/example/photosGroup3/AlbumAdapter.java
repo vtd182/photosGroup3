@@ -59,6 +59,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                     .setReorderingAllowed(true)
                     .commit();
         };
+
         holder.itemView.setOnClickListener(displayAlbum);
         setBackgroundColor(holder.itemView, null);
 
@@ -148,7 +149,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
         public AlbumOperationDialog(@NonNull Context context) {
             super(context);
-            @SuppressLint("InflateParams") LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.album_operations, null);
+            @SuppressLint("InflateParams") View layout =
+                    getLayoutInflater().inflate(R.layout.album_operations, null);
 
             Button renameBtn = layout.findViewById(R.id.album_rename_option);
             renameBtn.setOnClickListener(view -> {

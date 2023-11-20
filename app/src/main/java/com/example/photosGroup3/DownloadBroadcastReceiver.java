@@ -29,7 +29,6 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
             }
             Toast.makeText(ic.getContext(), "Download down", Toast.LENGTH_SHORT).show();
             ((MainActivity) ic.requireContext()).addImageUpdate(result);
-            // ((MainActivity)getContext()).DownloadImageFromURLVer3(url_input[0].trim(),url_input[1].trim());
             ic.notifyChangeGridLayout();
         }
 

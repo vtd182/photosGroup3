@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/custom_dialog"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_marginBottom="12dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/delete_album_notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Do you want to delete album &quot;album_name&quot; permanently in device ?"
+        android:layout_marginVertical="10dp"
+        android:textSize="16dp"
+        android:textAlignment="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        >
+        <ImageButton
+            android:id="@+id/delete_album_cancel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button_line"
+            android:src="@drawable/ic_baseline_close_24"
+            android:layout_marginRight="20dp"
+            />
+
+        <ImageButton
+            android:id="@+id/delete_album_confirm"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_line"
+            android:src="@drawable/ic_baseline_check_24" />
+
+    </LinearLayout>
+
+</LinearLayout>

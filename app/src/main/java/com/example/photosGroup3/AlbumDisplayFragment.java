@@ -138,8 +138,6 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
         ViewGroup.LayoutParams params = header.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         header.setLayoutParams(params);
-
-        // set text lại - TH: xóa bớt ảnh
         album_images_count.setText(String.format(context.getString(R.string.album_image_count), album.imagePaths.size()));
     }
 
@@ -148,7 +146,8 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
         public ImageChoosingDialog(@NonNull Context context) {
             super(context);
             addedPaths.clear();
-            @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.image_choosing, null);
+            @SuppressLint("InflateParams") RelativeLayout layout =
+                    (RelativeLayout) getLayoutInflater().inflate(R.layout.image_choosing, null);
 
             GridView imageList = layout.findViewById(R.id.image_choosing_imageList);
             imageList.setAdapter(new ImageChoosingAdapter(((MainActivity) context).getFileinDir()));
@@ -233,8 +232,6 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
                 }
 
                 view.setOnClickListener(view1 -> {
-                    //
-                    //
                     ViewHolder viewHolder1 = (ViewHolder) view1.getTag();
                     if (viewHolder1.checkBox.isChecked()) {
                         checkBoxValues.remove(i);

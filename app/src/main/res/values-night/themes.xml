@@ -27,9 +27,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-<!--    <style name="Theme.GalleryGr3.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+<!--    <style name="Theme.photosGroup3.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
 
-<!--    <style name="Theme.GalleryGr3.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+<!--    <style name="Theme.photosGroup3.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
     <!--    main activity-->
     <style name="navbar">
         <item name="android:background">@android:color/black</item>
@@ -51,7 +51,7 @@
     </style>
 
     <style name="customFloatBtnPri" >
-        <item name="android:backgroundTint">@color/red_1</item>
+        <item name="android:backgroundTint">@color/blue_1</item>
     </style>
     <style name="customFloatBtnSec" >
         <item name="android:backgroundTint">@color/fab</item>

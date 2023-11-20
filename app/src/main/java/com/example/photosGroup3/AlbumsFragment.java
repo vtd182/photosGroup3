@@ -152,7 +152,6 @@ public class AlbumsFragment extends Fragment {
     }
 
     private boolean addNewFolder(String newAlbumName) {
-//        MainActivity ma= (MainActivity) context;
         File path = new File(folderPath + "/" + newAlbumName);
         if (path.isDirectory()) {
             return false;
@@ -170,10 +169,14 @@ public class AlbumsFragment extends Fragment {
 
         public NewFolderDialog(@NonNull Context context) {
             super(context);
-            @SuppressLint("InflateParams") LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.new_album_dialog, null);
+
+            @SuppressLint("InflateParams") LinearLayout layout = (LinearLayout)
+                    getLayoutInflater().inflate(R.layout.new_album_dialog, null);
+
             ImageButton newBtn = layout.findViewById(R.id.new_alubum_button);
             ImageButton cancelBtn = layout.findViewById(R.id.new_album_cancel);
             EditText nameFolder = layout.findViewById(R.id.new_album_name);
+
             newBtn.setOnClickListener(view -> {
                 String newAlbumName = nameFolder.getText().toString();
                 if (addNewFolder(newAlbumName)) {
@@ -182,12 +185,15 @@ public class AlbumsFragment extends Fragment {
                     showAlertDialog();
                 }
             });
+
             cancelBtn.setOnClickListener(view -> dismiss());
             setContentView(layout);
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             layoutParams.copyFrom(Objects.requireNonNull(getWindow()).getAttributes());
             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
             layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            layoutParams.dimAmount = 0.7f;
             getWindow().setAttributes(layoutParams);
         }
     }

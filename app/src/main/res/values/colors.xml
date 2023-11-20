@@ -42,6 +42,6 @@
     <color name="ddmain">#65737e</color>
 <!--    light mode-->
     <color name="dlmain">@color/white</color>
-
+    <color name="blue_1" >#3AB4F2</color>
 
 </resources>
