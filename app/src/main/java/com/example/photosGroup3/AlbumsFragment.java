@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.photosGroup3.Utils.ItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
@@ -76,7 +77,7 @@ public class AlbumsFragment extends Fragment {
         rcv_albumList = layout.findViewById(R.id.album_list);
         rcv_albumList.setLayoutManager(new LinearLayoutManager(context));
         rcv_albumList.setAdapter(new AlbumAdapter(albumList, context));
-        rcv_albumList.addItemDecoration(new SpacesItemDecoration(20, 1));
+        rcv_albumList.addItemDecoration(new ItemDecoration(20, 1));
 
 //        InitSampleTest();
         //

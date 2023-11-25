@@ -156,7 +156,7 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
             ImageButton add_btn = layout.findViewById(R.id.image_choosing_add);
             add_btn.setOnClickListener(view -> {
                 dismiss();
-                MoveOrCopy.MoveOrCopyCallBack callBack = new MoveOrCopy.MoveOrCopyCallBack() {
+                MoveOrCopyForDialog.MoveOrCopyCallBack callBack = new MoveOrCopyForDialog.MoveOrCopyCallBack() {
                     @Override
                     public void dismissCallback(String method) {
                         album_images_count.setText(String.format(context.getString(R.string.album_image_count), album.imagePaths.size()));
@@ -173,7 +173,7 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
                         ImageDisplay.getInstance().addNewImage(newImagePath, 1);
                     }
                 };
-                MoveOrCopy dialog = new MoveOrCopy(context, callBack, album, addedPaths);
+                MoveOrCopyForDialog dialog = new MoveOrCopyForDialog(context, callBack, album, addedPaths);
                 dialog.show();
             });
 

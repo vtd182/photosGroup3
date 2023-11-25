@@ -49,7 +49,7 @@ public class EditFilterFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            context = getContext(); // use this reference to invoke main callbacks
+            context = getContext();
             main = (EditImage) getActivity();
         } catch (IllegalStateException e) {
             throw new IllegalStateException("MainActivity must implement callbacks");

@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.Objects;
 
-public class DownloadBroadcastReceiver extends BroadcastReceiver {
+public class DownloadBR extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -27,7 +27,7 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
                 Toast.makeText(ic.getContext(), "Download error, please try again", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Toast.makeText(ic.getContext(), "Download down", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ic.getContext(), "Success", Toast.LENGTH_SHORT).show();
             ((MainActivity) ic.requireContext()).addImageUpdate(result);
             ic.notifyChangeGridLayout();
         }

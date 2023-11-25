@@ -320,11 +320,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     @Override
     public void setCurrentDirectory(String Dir) {
         currentDirectory = Dir;
-
         folderPaths.add(Dir);
-
-        Toast.makeText(this, "Change Dir: " + Dir, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -680,7 +676,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
             AlbumChoosingDialog albumChoosingDialog = new AlbumChoosingDialog(mainActivity);
             albumChoosingDialog.show();
         } else if (viewId == R.id.addToFavoriteBtn) {
-            MoveOrCopy moveOrCopyDialog = new MoveOrCopy(mainActivity, new MoveOrCopy.MoveOrCopyCallBack() {
+            MoveOrCopyForDialog moveOrCopyForDialogDialog = new MoveOrCopyForDialog(mainActivity, new MoveOrCopyForDialog.MoveOrCopyCallBack() {
                 @Override
                 public void dismissCallback(String method) {
                     if (method.equals("remove")) {
@@ -703,7 +699,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                     AlbumsFragment.favoriteAlbum().imagePaths.add(newImagePath);
                 }
             }, AlbumsFragment.favoriteAlbum(), chooseToDeleteInList());
-            moveOrCopyDialog.show();
+            moveOrCopyForDialogDialog.show();
         }
     }
 
@@ -773,7 +769,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                 buttonDrawable = DrawableCompat.wrap(buttonDrawable);
                 DrawableCompat.setTint(buttonDrawable, context.getResources().getColor(R.color.fullScreenBtn));
                 view.setBackground(buttonDrawable);
-                MoveOrCopy dialog = new MoveOrCopy(context, new MoveOrCopy.MoveOrCopyCallBack() {
+                MoveOrCopyForDialog dialog = new MoveOrCopyForDialog(context, new MoveOrCopyForDialog.MoveOrCopyCallBack() {
                     @Override
                     public void dismissCallback(String method) {
                         view.setBackgroundResource(android.R.color.transparent);

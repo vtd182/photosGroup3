@@ -308,7 +308,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         if (images == null) {
             assert context != null;
             setImagesData(((MainActivity) context).getFileinDir());
-            Toast.makeText(getContext(), "Complete get file", Toast.LENGTH_SHORT).show();
         }
 
     }

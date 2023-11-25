@@ -35,7 +35,7 @@ public class EditImage extends AppCompatActivity implements EditImageCallbacks {
     ImageView edit_img;
     FragmentTransaction ft;
     EditTransformFragment transformFragment;
-    EditBlurFragment blurFragment;
+    BlurEditorFragment blurFragment;
     EditFilterFragment filterFragment;
     String imgName = null;
     Bitmap editedImage = null;
@@ -86,7 +86,7 @@ public class EditImage extends AppCompatActivity implements EditImageCallbacks {
             fragmentLayoutDisplay.setVisibility(View.VISIBLE);
             edit_nav.setVisibility(View.GONE);
             ft = getSupportFragmentManager().beginTransaction();
-            blurFragment = EditBlurFragment.newInstance();
+            blurFragment = BlurEditorFragment.newInstance();
             ft.replace(R.id.fragment_function_btns, blurFragment);
             ft.commit();
         });

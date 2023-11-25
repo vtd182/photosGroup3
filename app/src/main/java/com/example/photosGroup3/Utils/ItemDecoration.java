@@ -1,4 +1,4 @@
-package com.example.photosGroup3;
+package com.example.photosGroup3.Utils;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -7,12 +7,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+public class ItemDecoration extends RecyclerView.ItemDecoration {
     private final int space;
     private int spanColumns;
     private boolean isUsed;
 
-    public SpacesItemDecoration(int space, int spanColumns) {
+    public ItemDecoration(int space, int spanColumns) {
         this.spanColumns = spanColumns;
         this.space = space;
         isUsed = true;
@@ -22,7 +22,6 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state) {
         outRect.right = space;
         outRect.bottom = space;
-        // Add top margin only for the first item to avoid double space between items
 
         if (parent.getChildLayoutPosition(view) < spanColumns) {
             outRect.top = space;

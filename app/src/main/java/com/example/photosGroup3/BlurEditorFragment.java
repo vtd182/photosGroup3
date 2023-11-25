@@ -16,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class EditBlurFragment extends Fragment {
+public class BlurEditorFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
-    static EditBlurFragment instance = null;
+    static BlurEditorFragment instance = null;
     EditImage main;
     Context context = null;
 
@@ -27,11 +27,11 @@ public class EditBlurFragment extends Fragment {
     TextView text;
     Bitmap blurredImage;
 
-    public static EditBlurFragment newInstance() {
+    public static BlurEditorFragment newInstance() {
         if (instance == null) {
-            instance = new EditBlurFragment();
+            instance = new BlurEditorFragment();
         }
-        return new EditBlurFragment();
+        return new BlurEditorFragment();
     }
 
     @Override

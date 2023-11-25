@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
-public class MoveOrCopy extends BottomSheetDialog {
+public class MoveOrCopyForDialog extends BottomSheetDialog {
     MoveOrCopyCallBack callBack;
     Album album;
     ArrayList<String> addedPaths;
@@ -33,8 +33,8 @@ public class MoveOrCopy extends BottomSheetDialog {
         }
     }
 
-    public MoveOrCopy(@NonNull Context context, @NonNull MoveOrCopyCallBack callBack,
-                      Album album, ArrayList<String> addedPath) {
+    public MoveOrCopyForDialog(@NonNull Context context, @NonNull MoveOrCopyCallBack callBack,
+                               Album album, ArrayList<String> addedPath) {
         super(context);
         this.callBack = callBack;
         this.album = album;
