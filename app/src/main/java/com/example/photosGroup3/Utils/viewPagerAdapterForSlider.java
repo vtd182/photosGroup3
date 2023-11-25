@@ -18,8 +18,8 @@ public class viewPagerAdapterForSlider extends RecyclerView.Adapter<viewPagerAda
     ArrayList<viewPagerItem> arrayItems;
     SlideShow main;
 
-    public viewPagerAdapterForSlider(ArrayList<viewPagerItem> arrayItems , SlideShow main) {
-        this.main=main;
+    public viewPagerAdapterForSlider(ArrayList<viewPagerItem> arrayItems, SlideShow main) {
+        this.main = main;
         this.arrayItems = arrayItems;
     }
 
@@ -27,14 +27,13 @@ public class viewPagerAdapterForSlider extends RecyclerView.Adapter<viewPagerAda
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.slider_picture,parent,false);
-//                .inflate(R.layout.full_creen_picture,parent,false);
+                .inflate(R.layout.slider_picture, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        viewPagerItem item= arrayItems.get(position);
+        viewPagerItem item = arrayItems.get(position);
         holder.img.setImageBitmap(item.getItemBitmap());
     }
 
@@ -44,17 +43,12 @@ public class viewPagerAdapterForSlider extends RecyclerView.Adapter<viewPagerAda
         return arrayItems.size();
     }
 
-    public class ViewHolder  extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        //    TextView txtName;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img=itemView.findViewById(R.id.sliderImage);
-//            img=itemView.findViewById(R.id.imageView);
-            // txtName=itemView.findViewById(R.id.tvName);
-
+            img = itemView.findViewById(R.id.sliderImage);
         }
     }
 }

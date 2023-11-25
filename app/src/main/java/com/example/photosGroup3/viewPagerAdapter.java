@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photosGroup3.Callback.ZoomCallBack;
-import com.example.photosGroup3.Utils.ImageUltility;
+import com.example.photosGroup3.Utils.ImageUtility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -205,7 +205,7 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
 
         File imgFile = new File(currentImg);
         Bitmap imageShoot = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        imageShoot = ImageUltility.rotateImage(imageShoot, totalRotate);
+        imageShoot = ImageUtility.rotateImage(imageShoot, totalRotate);
 
         assert setimg != null;
         setimg.setImageBitmap(imageShoot);

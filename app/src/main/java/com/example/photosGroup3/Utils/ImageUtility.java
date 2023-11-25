@@ -7,7 +7,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
-public class ImageUltility {
+public class ImageUtility {
     public static Bitmap rotateImage(Bitmap bmpSrc, float degrees) {
         int w = bmpSrc.getWidth();
         int h = bmpSrc.getHeight();

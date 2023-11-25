@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DownloadManager;
-import android.app.Notification;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+//noinspection ExifInterface
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +48,7 @@ import androidx.fragment.app.Fragment;
 import com.example.photosGroup3.Callback.chooseAndDelete;
 import com.example.photosGroup3.Utils.ImageDate;
 import com.example.photosGroup3.Utils.ImageName;
-import com.example.photosGroup3.Utils.ImageUltility;
+import com.example.photosGroup3.Utils.ImageUtility;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -424,7 +424,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
     private void showInputDialogBox() {
         final String[] url_input = {"", ""};
-        final Dialog customDialog = new Dialog(getContext());
+        final Dialog customDialog = new Dialog(requireContext());
         customDialog.setTitle("Delete confirm");
 
         customDialog.setContentView(R.layout.url_download_diagbox);
@@ -432,17 +432,13 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
 
         customDialog.findViewById(R.id.download_url_cancel)
-                .setOnClickListener(view -> {
-                    customDialog.dismiss();
-                });
+                .setOnClickListener(view -> customDialog.dismiss());
 
         customDialog.findViewById(R.id.download_url_confirm)
                 .setOnClickListener(view -> {
                     url_input[0] = ((EditText) customDialog.findViewById(R.id.download_url_input)).getText().toString();
                     url_input[1] = ((EditText) customDialog.findViewById(R.id.download_url_rename)).getText().toString();
-                    Toast.makeText(INSTANCE.getContext(), url_input[0], Toast.LENGTH_SHORT).show();
                     DownloadImageFromURL(url_input[0].trim(), url_input[1].trim());
-
                     customDialog.dismiss();
                 });
 
@@ -450,28 +446,32 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     }
 
     private void DownloadImageFromURL(String input, String fileName) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(input));
+        try {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(input));
+            String fileExtension = input.substring(input.lastIndexOf("."));
+            while (fileExtension.charAt(fileExtension.length() - 1) == '\n') {
+                fileExtension = fileExtension.substring(0, fileExtension.length() - 1);
+            }
 
-        String fileExtension = input.substring(input.lastIndexOf("."));
-        while (fileExtension.charAt(fileExtension.length() - 1) == '\n') {
-            fileExtension = fileExtension.substring(0, fileExtension.length() - 1);
+            if (fileName.length() == 0) {
+                fileName = (new Date()).getTime() + "";
+
+            }
+            fullNameFile = ((MainActivity) requireContext()).getPictureDirectory() + "/" + fileName + fileExtension;
+            request.setDescription("Downloading " + input + "...");
+            request.setTitle(input);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationUri(Uri.fromFile(new File(fullNameFile)));
+            DownloadManager manager = (DownloadManager) INSTANCE.requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            manager.enqueue(request);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            new NotificationCompat.Builder(requireContext(), "Download " + fullNameFile)
+                    .setContentText("Downloaded item")
+                    .setSmallIcon(R.drawable.ic_launcher_background).build();
+
+        } catch (Exception e) {
+            Toast.makeText(INSTANCE.getContext(), "Download error, please try again", Toast.LENGTH_SHORT).show();
         }
-
-        if (fileName.length() == 0) {
-            fileName = (new Date()).getTime() + "";
-
-        }
-        fullNameFile = ((MainActivity) requireContext()).getPictureDirectory() + "/" + fileName + fileExtension;
-        request.setDescription("Downloading " + input + "...");
-        request.setTitle(input);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationUri(Uri.fromFile(new File(fullNameFile)));
-        DownloadManager manager = (DownloadManager) INSTANCE.requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-        Notification noti = new NotificationCompat.Builder(requireContext(), "Download " + fullNameFile)
-                .setContentText("Downloaded item")
-                .setSmallIcon(R.drawable.ic_launcher_background).build();
     }
 
 
@@ -526,7 +526,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         File imgFile = new File(namePictureShoot);
                         Bitmap imageShoot = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        imageShoot = ImageUltility.rotateImage(imageShoot, 90);
+                        imageShoot = ImageUtility.rotateImage(imageShoot, 90);
                         FileOutputStream out;
                         try {
                             out = new FileOutputStream(imgFile);
@@ -627,12 +627,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
             dates.add(temp.dayToString());
         }
 
-//        Collections.sort(imgDates);
-//        Collections.reverse(imgDates);
-//        for (int i = 0; i < imgDates.size(); i++) {
-//            this.images.set(i, imgDates.get(i).getImage());
-//
-//        }
         names = new ArrayList<>();
         imgNames = new ArrayList<>();
 

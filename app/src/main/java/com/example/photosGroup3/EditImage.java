@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.photosGroup3.Callback.EditImageCallbacks;
 import com.example.photosGroup3.Utils.EditTransformFragment;
 import com.example.photosGroup3.Utils.ImageDelete;
-import com.example.photosGroup3.Utils.ImageUltility;
+import com.example.photosGroup3.Utils.ImageUtility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class EditImage extends AppCompatActivity implements EditImageCallbacks {
             edit_nav.setVisibility(View.GONE);
             ArrayList<Bitmap> listImage = new ArrayList<>();
             for (String s : listName) {
-                listImage.add(ImageUltility.setFilter(editedImage, s));
+                listImage.add(ImageUtility.setFilter(editedImage, s));
             }
 
             fragmentLayoutDisplay.setVisibility(View.VISIBLE);
