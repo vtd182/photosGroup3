@@ -34,6 +34,8 @@ import java.util.Objects;
  * Use the {@link AlbumDisplayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+// TO DO: add new toolbar for this fragment
 public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongClickCallback {
     Context context;
     ImageButton back_button, resize_button;
@@ -123,7 +125,7 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
     @Override
     public void onResume() {
         super.onResume();
-        ImageDisplay.getInstance().header.setVisibility(View.GONE);
+        ImageDisplay.getInstance().getToolbar().setVisibility(View.GONE);
     }
 
     @Override

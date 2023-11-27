@@ -107,6 +107,14 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     private ImageDisplay() {
     }
 
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    public void setToolbar(Toolbar toolbar) {
+        this.toolbar = toolbar;
+    }
+
     Toolbar toolbar;
 
     public static ImageDisplay getInstance() {
@@ -318,7 +326,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         super.onCreate(savedInstanceState);
         this.context = getActivity();
         setHasOptionsMenu(true);
-        Toast.makeText(context, "Oncrt", Toast.LENGTH_SHORT).show();
         if (images == null) {
             assert context != null;
             setImagesData(((MainActivity) context).getFileinDir());
