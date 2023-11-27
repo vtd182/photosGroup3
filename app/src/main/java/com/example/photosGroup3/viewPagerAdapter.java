@@ -182,6 +182,7 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
         initMatrix = null;
     }
 
+    /** @noinspection deprecation*/
     @Override
     public Bitmap RotateDegree(String currentImg, float degree, int pos) {
 
@@ -195,10 +196,10 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
             totalRotate += degree;
         }
 
-        ImageView setimg = null;
+        ImageView setImg = null;
         for (int i = 0; i < TemplateView.size(); i++) {
             if (TemplateView.get(i).getAdapterPosition() == pos) {
-                setimg = TemplateView.get(i).itemView.findViewById(R.id.imageView);
+                setImg = TemplateView.get(i).itemView.findViewById(R.id.imageView);
             }
         }
 
@@ -207,8 +208,8 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
         Bitmap imageShoot = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
         imageShoot = ImageUtility.rotateImage(imageShoot, totalRotate);
 
-        assert setimg != null;
-        setimg.setImageBitmap(imageShoot);
+        assert setImg != null;
+        setImg.setImageBitmap(imageShoot);
         return imageShoot;
     }
 
@@ -216,6 +217,7 @@ public class viewPagerAdapter extends RecyclerView.Adapter<viewPagerAdapter.View
     public void setImageView(String currentImg, int pos) {
         ImageView setimg = null;
         for (int i = 0; i < TemplateView.size(); i++) {
+            //noinspection deprecation
             if (TemplateView.get(i).getAdapterPosition() == pos) {
                 setimg = TemplateView.get(i).itemView.findViewById(R.id.imageView);
             }

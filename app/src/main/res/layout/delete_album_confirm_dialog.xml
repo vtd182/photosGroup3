@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -30,14 +31,15 @@
         android:gravity="center"
         android:paddingTop="10dp"
         >
+
         <ImageButton
             android:id="@+id/delete_album_cancel"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button_line"
             android:src="@drawable/ic_baseline_close_24"
-            android:layout_marginRight="20dp"
-            />
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/delete_album_confirm"
@@ -45,7 +47,8 @@
             android:layout_height="48dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/button_line"
-            android:src="@drawable/ic_baseline_check_24" />
+            android:src="@drawable/ic_baseline_check_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
 

@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -49,7 +48,6 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     ArrayList<String> imagesPath;
     ArrayList<String> imagesDate;
     ArrayList<Integer> imagesSize;
-    MediaPlayer mediaPlayer;
     LinearLayout subInfo;
     LinearLayout changeWallpaper;
     LinearLayout changeWallpaperLock;
@@ -259,7 +257,6 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
                         showCustomDialogBoxInRotatePicture(rotateImage, imageRotated);
 
                     }
-                    String temp = aa.getItem(position).getSelectedName();
                     setCurrentSelectedName(aa.getItem(position).getSelectedName());
                     setCurrentPosition(position);
 
@@ -317,6 +314,7 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
                 bitmaps.get(i).compress(Bitmap.CompressFormat.JPEG, 100, fOut);
                 fOut.flush();
                 fOut.close();
+                //noinspection ResultOfMethodCallIgnored
                 file.setReadable(true, false);
 
                 Uri uri = FileProvider.getUriForFile(getApplicationContext(),
@@ -343,7 +341,7 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
             intent.setType("image/*");
             startActivity(Intent.createChooser(intent, "Share file via"));
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -371,11 +369,11 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void removeImageUpdate(String input) {
-        //xoas trong selectedImage
+        // remove on selected image
         deleteStringArrayByPossision(paths, currentPosition);
         deleteStringArrayByPossision(dates, currentPosition);
         deleteIntergerArrayByPossision(size, currentPosition);
-        //xóa trong adepter
+        // remove on adapter
         listItem.remove(currentPosition);
         viewPager2.setCurrentItem(currentPosition, false);
         aa.notifyDataSetChanged();
@@ -383,13 +381,14 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     }
 
     public void renameImageUpdate(String input) {
-        //sửa lại tên local trong adepter
-        paths[currentPosition] = paths[currentPosition].substring(0, paths[currentPosition].lastIndexOf("/") + 1) + input;
+        // rename on selected image
+        paths[currentPosition] = paths[currentPosition].
+                substring(0, paths[currentPosition].
+                        lastIndexOf("/") + 1) + input;
     }
 
     @Override
     public void showNav() {
-
         if (!displayNavBars) {
             topNav.setVisibility(View.VISIBLE);
             bottomNav.setVisibility(View.VISIBLE);
@@ -407,19 +406,18 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     public void hiddenNav() {
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void showCustomDialogBoxDelete() {
         final Dialog customDialog = new Dialog(this);
         customDialog.setTitle("Delete confirm");
 
-        customDialog.setContentView(R.layout.delete_dialog_notify);
+        customDialog.setContentView(R.layout.delete_image_confirm_dialog);
         Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
         ((TextView) customDialog.findViewById(R.id.deleteNotify))
                 .setText("Do you want to delete in your device ?");
 
-        ((ImageButton) customDialog.findViewById(R.id.cancel_delete))
+        customDialog.findViewById(R.id.cancel_delete)
                 .setOnClickListener(view -> {
-                    //donothing
                     customDialog.dismiss();
                 });
 
@@ -428,7 +426,6 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
                     ImageDisplay ic = ImageDisplay.getInstance();
                     ImageDelete.DeleteImage(currentSelectedName);
                     removeImageUpdate(currentSelectedName);
-                    //cập nhật lại danh sách trong ImageDisplay
                     ic.deleteClicked(currentSelectedName);
                     customDialog.dismiss();
                     onBackPressed();
@@ -445,28 +442,24 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     }
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void showCustomDialogBoxInSelectedPicture() {
         final Dialog customDialog = new Dialog(this);
         customDialog.setTitle("Delete confirm");
 
-        customDialog.setContentView(R.layout.delete_dialog_notify);
+        customDialog.setContentView(R.layout.delete_image_confirm_dialog);
         Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
         ((TextView) customDialog.findViewById(R.id.deleteNotify))
                 .setText("Do you want to delete in your device ?");
 
         customDialog.findViewById(R.id.cancel_delete)
-                .setOnClickListener(view -> {
-                    //donothing
-                    customDialog.dismiss();
-                });
+                .setOnClickListener(view -> customDialog.dismiss());
 
         customDialog.findViewById(R.id.confirmDelete)
                 .setOnClickListener(view -> {
                     ImageDisplay ic = ImageDisplay.getInstance();
                     ImageDelete.DeleteImage(currentSelectedName);
                     removeImageUpdate(currentSelectedName);
-                    //cập nhật lại danh sách trong ImageDisplay
                     ic.deleteClicked(currentSelectedName);
                     customDialog.dismiss();
                 });
@@ -500,12 +493,12 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
         customDialog.show();
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void showCustomDialogBoxInRotatePicture(Bitmap rotateImage2, String imageRotated2) {
         final Dialog customDialog = new Dialog(this);
         customDialog.setTitle("Change confirm");
 
-        customDialog.setContentView(R.layout.delete_dialog_notify);
+        customDialog.setContentView(R.layout.delete_image_confirm_dialog);
         Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
         ((TextView) customDialog.findViewById(R.id.deleteNotify))
                 .setText("Do you want to save your change ?");
@@ -578,7 +571,7 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
         final Dialog customDialog = new Dialog(this);
         customDialog.setTitle("Change Wallpaper");
 
-        customDialog.setContentView(R.layout.edit_text_dialog);
+        customDialog.setContentView(R.layout.rename_dialog);
         Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 

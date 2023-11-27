@@ -71,25 +71,18 @@ public class AlbumsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         CoordinatorLayout layout = (CoordinatorLayout) inflater.inflate(R.layout.fragment_albums, container, false);
-        Toast.makeText(context, "album create", Toast.LENGTH_SHORT).show();
         // SAMPLE TEST
         spanColumns = 2;
         rcv_albumList = layout.findViewById(R.id.album_list);
         rcv_albumList.setLayoutManager(new LinearLayoutManager(context));
         rcv_albumList.setAdapter(new AlbumAdapter(albumList, context));
         rcv_albumList.addItemDecoration(new ItemDecoration(20, 1));
-
-//        InitSampleTest();
-        //
-
-        // Add new Button
         fab_addNewAlbum = layout.findViewById(R.id.album_fab_add);
         fab_addNewAlbum.setOnClickListener(view -> showNewFolderDialog());
         return layout;
     }
 
     private static void readData() {
-//        MainActivity ma= (MainActivity) getContext();
         albumList = new ArrayList<>();
         File path = new File(folderPath);
         if (!path.isDirectory()) {
@@ -193,7 +186,6 @@ public class AlbumsFragment extends Fragment {
             layoutParams.copyFrom(Objects.requireNonNull(getWindow()).getAttributes());
             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
             layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             layoutParams.dimAmount = 0.7f;
             getWindow().setAttributes(layoutParams);
         }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
@@ -23,7 +22,6 @@ public class SettingsFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
 
-    //    darkmode var
     SwitchCompat changeDark;
 
     public SettingsFragment() {
@@ -48,15 +46,13 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         changeDark = view.findViewById(R.id.switchDarkmode);
         boolean status = ((MainActivity) requireContext()).getIsDark();
         changeDark.setChecked(status);
-        changeDark.setOnCheckedChangeListener((compoundButton, b) -> {
-            Toast.makeText(getContext(), "hello" + b, Toast.LENGTH_SHORT).show();
-            ((MainActivity) requireContext()).setIsDark(b);
+        changeDark.setOnCheckedChangeListener((compoundButton, isDark) -> {
+            ((MainActivity) requireContext()).setIsDark(isDark);
         });
 
         return view;

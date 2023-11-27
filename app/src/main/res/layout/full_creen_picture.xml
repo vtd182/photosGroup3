@@ -13,8 +13,8 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:scaleType="fitCenter"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 <!--    <TextView-->
 <!--        android:id="@+id/tvName"-->
 <!--        android:layout_below="@+id/imageView"-->

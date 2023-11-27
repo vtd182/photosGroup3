@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,50 +15,55 @@
         >
 
         <ImageButton
-            android:theme="@style/selectedImg"
             android:id="@+id/edit_cancel_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:padding="2dp"
-            android:src="@drawable/ic_baseline_close_24" />
+            android:src="@drawable/ic_baseline_close_24"
+            android:theme="@style/selectedImg"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:theme="@style/selectedImg"
             android:id="@+id/edit_reset_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_toStartOf="@+id/edit_confirm_btn"
             android:padding="2dp"
-            android:src="@drawable/ic_baseline_autorenew_24" />
+            android:src="@drawable/ic_baseline_autorenew_24"
+            android:theme="@style/selectedImg"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:theme="@style/selectedImg"
             android:id="@+id/edit_confirm_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
             android:padding="2dp"
-            android:src="@drawable/ic_baseline_check_24" />
+            android:src="@drawable/ic_baseline_check_24"
+            android:theme="@style/selectedImg"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:paddingHorizontal="20dp"
         android:theme="@style/customBackgroundSecond"
-        >
+        tools:ignore="InefficientWeight">
 
         <ImageView
             android:id="@+id/edit_image_object"
-            android:layout_width="391dp"
-            android:layout_height="362dp"
-            android:layout_centerInParent="true"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="100dp"
             android:src="@drawable/error_image"
-            android:theme="@style/customBackgroundSecond">
+            android:theme="@style/customBackgroundSecond"
+            tools:ignore="ContentDescription">
 
         </ImageView>
 
@@ -78,18 +84,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables,TextSizeCheck">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_transform_24"
-                    android:theme="@style/selectedImg" />
+                    android:theme="@style/selectedImg"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transform" />
+                    android:text="@string/transform_txt" />
             </LinearLayout>
 
             <LinearLayout
@@ -98,19 +106,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_filter_24"
-                    android:theme="@style/selectedImg" />
+                    android:theme="@style/selectedImg"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Filter" />
+                    android:text="@string/filter_txt" />
             </LinearLayout>
 
             <LinearLayout
@@ -119,18 +129,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_blur_on_24"
-                    android:theme="@style/selectedImg" />
+                    android:theme="@style/selectedImg"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blur" />
+                    android:text="Blur"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
 

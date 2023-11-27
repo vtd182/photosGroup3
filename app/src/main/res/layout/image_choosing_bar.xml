@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/dBackground"
@@ -33,25 +34,27 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
             <ImageButton
                 android:id="@+id/image_choosing_cancel"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:theme="@style/dSelectedBtn"
                 android:padding="2dp"
-                android:src="@drawable/ic_baseline_close_24" />
-
+                android:src="@drawable/ic_baseline_close_24"
+                android:theme="@style/dSelectedBtn"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
 
             <ImageButton
-                android:theme="@style/dSelectedBtn"
                 android:id="@+id/image_choosing_add"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:padding="2dp"
-                android:src="@drawable/ic_baseline_check_24" />
+                android:src="@drawable/ic_baseline_check_24"
+                android:theme="@style/dSelectedBtn"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
         </TableRow>
 
     </TableLayout>

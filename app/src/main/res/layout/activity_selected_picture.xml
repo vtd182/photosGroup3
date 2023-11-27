@@ -19,11 +19,12 @@
         >
 
         <ImageButton
-            android:theme="@style/selectedImg"
             android:id="@+id/backButton"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_arrow_back_24" />
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:theme="@style/selectedImg"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/saveBtn"
@@ -32,15 +33,19 @@
             android:layout_toStartOf="@id/infoBtn"
             android:gravity="right"
             android:src="@drawable/ic_baseline_save_24"
-            android:theme="@style/selectedImg" />
-        <ImageButton
             android:theme="@style/selectedImg"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
+
+        <ImageButton
             android:id="@+id/infoBtn"
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:gravity="right"
-            android:src="@drawable/ic_baseline_info_24" />
+            android:src="@drawable/ic_baseline_info_24"
+            android:theme="@style/selectedImg"
+            tools:ignore="RtlHardcoded,SpeakableTextPresentCheck"
+            android:importantForAccessibility="no" />
     </RelativeLayout>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -48,7 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:clickable="true">
+        android:clickable="true"
+        tools:ignore="ObsoleteLayoutParam,SpeakableTextPresentCheck">
 
     </androidx.viewpager2.widget.ViewPager2>
     <LinearLayout
@@ -60,27 +66,30 @@
         android:orientation="vertical"
         android:id="@+id/subInfo"
         android:visibility="invisible"
-        >
+        tools:ignore="RtlHardcoded">
 
         <LinearLayout
             android:id="@+id/changeNameFile"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="10dp"
                 android:src="@drawable/rename"
-                android:theme="@style/selectedImg" />
+                android:theme="@style/selectedImg"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Đổi tên file"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                tools:ignore="HardcodedText,SpUsage" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +98,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:id="@+id/changeWallpaper"
-            >
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:theme="@style/selectedImg"
@@ -97,13 +106,13 @@
                 android:layout_height="50dp"
                 android:src="@drawable/image"
                 android:padding="10dp"
-                />
+                tools:ignore="ContentDescription" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thay đổi màn hình chính"
                 android:textSize="15dp"
-                />
+                tools:ignore="HardcodedText,SpUsage" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +121,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:id="@+id/changeWallpaperLock"
-            >
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:theme="@style/selectedImg"
@@ -120,13 +129,13 @@
                 android:layout_height="50dp"
                 android:src="@drawable/photos"
                 android:padding="10dp"
-                />
+                tools:ignore="ContentDescription" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thay đổi màn hình khóa"
                 android:textSize="15dp"
-                />
+                tools:ignore="HardcodedText,SpUsage" />
         </LinearLayout>
 
     </LinearLayout>
@@ -162,41 +171,50 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
+                android:src="@drawable/ic_baseline_share_24"
                 android:theme="@style/selectedImg"
-                android:src="@drawable/ic_baseline_share_24" />
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,SpeakableTextPresentCheck" />
+
             <ImageButton
-                android:theme="@style/selectedImg"
                 android:id="@+id/editBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_edit_24" />
-            <ImageButton
+                android:src="@drawable/ic_baseline_edit_24"
                 android:theme="@style/selectedImg"
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,SpeakableTextPresentCheck" />
+
+            <ImageButton
                 android:id="@+id/deleteSingleBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_delete_white_24" />
-            <ImageButton
+                android:src="@drawable/ic_baseline_delete_white_24"
                 android:theme="@style/selectedImg"
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,SpeakableTextPresentCheck" />
+
+            <ImageButton
                 android:id="@+id/rotateBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_screen_rotation_24" />
-            <ImageButton
+                android:src="@drawable/ic_baseline_screen_rotation_24"
                 android:theme="@style/selectedImg"
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,SpeakableTextPresentCheck" />
+
+            <ImageButton
                 android:id="@+id/moreBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_weight="1"
+                android:src="@drawable/ic_baseline_more_horiz_24"
 
-                android:src="@drawable/ic_baseline_more_horiz_24" />
+                android:theme="@style/selectedImg"
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,SpeakableTextPresentCheck" />
 
         </LinearLayout>
 

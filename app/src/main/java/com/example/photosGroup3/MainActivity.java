@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -34,6 +35,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -88,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     int[] arrIcon = new int[3];
     int[] arrSelectedIcon = new int[3];
     Fragment[] arrFrag = new Fragment[3];
+
+    Toolbar toolbar;
     public static String[] ImageExtensions = new String[]{
             ".jpg",
             ".png",
@@ -164,7 +168,16 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
         arrNavLinearLayouts[2].setOnClickListener(new NavLinearLayouts(2));
 
         setCurrentDirectory(Picture);
+        setSupportActionBar(toolbar);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        Toast.makeText(this, "onCreateOptionsMenu", Toast.LENGTH_SHORT).show();
+        Log.d("Callback", "Callback is called");
+        getMenuInflater().inflate(R.menu.menu_for_main_activity, menu);
+        return true;
     }
 
 
@@ -186,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                 bitmaps.get(i).compress(Bitmap.CompressFormat.JPEG, 100, fOut);
                 fOut.flush();
                 fOut.close();
+                //noinspection ResultOfMethodCallIgnored
                 file.setReadable(true, false);
 
                 Uri uri = FileProvider.getUriForFile(this,
@@ -208,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
             intent.setType("image/*");
             startActivity(Intent.createChooser(intent, "Share file via"));
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -226,10 +240,11 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void showSliderDialogBox() {
         final Dialog customDialog = new Dialog(mainActivity);
         customDialog.setContentView(R.layout.slider_diaglog_notify);
-        customDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        Objects.requireNonNull(customDialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
 
         customDialog.findViewById(R.id.cancelSlider)
                 .setOnClickListener(view -> customDialog.dismiss());
@@ -259,12 +274,12 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     }
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void showCustomDialogBox() {
         final Dialog customDialog = new Dialog(mainActivity);
         customDialog.setTitle("Delete confirm");
 
-        customDialog.setContentView(R.layout.delete_dialog_notify);
+        customDialog.setContentView(R.layout.delete_image_confirm_dialog);
         Objects.requireNonNull(customDialog.getWindow()).
                 setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
 
@@ -272,9 +287,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                 .setText("Do you want to delete " + deleteNotify + " image(s) permanently in your device ?");
 
         customDialog.findViewById(R.id.cancel_delete)
-                .setOnClickListener(view -> {
-                    customDialog.dismiss();
-                });
+                .setOnClickListener(view -> customDialog.dismiss());
 
         customDialog.findViewById(R.id.confirmDelete)
                 .setOnClickListener(view -> {
@@ -463,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                 }
             }
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
     }
@@ -524,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                             if (oldName.equals(file.getName())) {
                                 File from = new File(Dir + "/" + oldName);
                                 File to = new File(Dir + "/" + newName);
+                                //noinspection ResultOfMethodCallIgnored
                                 from.renameTo(to);
                                 FileInPaths.remove(Dir + "/" + oldName);
                                 FileInPaths.add(Dir + "/" + newName);
@@ -642,6 +656,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
         arrNavTextViews[0] = findViewById(R.id.photos_txt);
         arrNavTextViews[1] = findViewById(R.id.albums_txt);
         arrNavTextViews[2] = findViewById(R.id.settings_txt);
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -751,6 +766,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     }
 
     private class AlbumChoosingDialog extends Dialog {
+        @SuppressLint("UseCompatLoadingForDrawables")
         public AlbumChoosingDialog(@NonNull Context context) {
             super(context);
             @SuppressLint("InflateParams") View layout =

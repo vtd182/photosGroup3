@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
@@ -19,9 +20,10 @@
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:gravity="center"
-            android:text="Album Operation"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:text="Album Editer"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,TextSizeCheck" />
 
         <Button
             android:id="@+id/album_rename_option"
@@ -32,7 +34,8 @@
             android:paddingLeft="20dp"
             android:text="Rename"
             android:textAlignment="center"
-            android:textColor="#757575" />
+            android:textColor="#757575"
+            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,VisualLintButtonSize" />
 
         <Button
             android:id="@+id/album_delete_option"
@@ -42,6 +45,7 @@
             android:paddingLeft="20dp"
             android:text="Delete"
             android:textAlignment="center"
-            android:textColor="#757575" />
+            android:textColor="#757575"
+            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,VisualLintButtonSize" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

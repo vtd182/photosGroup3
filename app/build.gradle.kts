@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.photosGroup3"
-        minSdk = 31
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -29,6 +29,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+
+
 }
 
 dependencies {

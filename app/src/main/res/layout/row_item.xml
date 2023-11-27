@@ -30,21 +30,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        tools:ignore="VisualLintOverlap" />
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/placehoder"
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/placehoder"
 
-
-            />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
                 <CheckBox
                     android:id="@+id/checkImage"
@@ -55,7 +55,7 @@
                     android:clickable="true"
                     android:checked="false"
                     android:gravity="bottom"
-                    >
+                    tools:ignore="VisualLintButtonSize">
 
                 </CheckBox>
 

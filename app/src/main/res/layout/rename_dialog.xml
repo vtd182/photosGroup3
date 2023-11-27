@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,17 +17,19 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,SpUsage" />
+
     <EditText
-        android:layout_width="250dp"
-        android:layout_height="40dp"
         android:id="@+id/editChangeFileName"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        android:background="@drawable/custom_row_album"
         android:layout_marginTop="20dp"
+        android:background="@drawable/custom_row_album"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        />
+        tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck,TextFields" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,31 +38,34 @@
         android:textStyle="italic"
         android:visibility="invisible"
         android:id="@+id/errorName"
-        android:text="File name not null and contain special charater"/>
+        android:text="File name not null and contain special charater"
+        tools:ignore="HardcodedText" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
+
         <ImageButton
-            android:theme="@style/dSelectedBtn"
             android:id="@+id/cancel"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginRight="20dp"
 
             android:src="@drawable/ic_baseline_close_24"
-            android:layout_marginRight="20dp"
-            />
+            android:theme="@style/dSelectedBtn"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:theme="@style/dSelectedBtn"
             android:id="@+id/ok_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_baseline_check_24"
 
-            android:src="@drawable/ic_baseline_check_24" />
+            android:theme="@style/dSelectedBtn"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
     </LinearLayout>
 
 </LinearLayout>

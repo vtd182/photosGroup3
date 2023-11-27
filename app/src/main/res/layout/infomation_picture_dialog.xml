@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -15,7 +16,8 @@
         android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"
+        tools:ignore="HardcodedText,SpUsage" />
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -23,14 +25,17 @@
         android:layout_gravity="center"
         >
         <TableRow>
-            <TextView android:text="Image Name:"
-                android:textSize="15dp"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:gravity="right"/>
 
             <TextView
-                android:textSize="15dp"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="Image Name:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,RtlHardcoded,TextSizeCheck" />
+
+            <TextView
+                android:textSize="15sp"
                 android:padding="5dp"
                 android:id="@+id/photoName"
                 android:layout_width="fill_parent"
@@ -38,55 +43,66 @@
                 />
         </TableRow>
         <TableRow>
-            <TextView android:text="Image Path:"
-                android:textSize="15dp"
+
+            <TextView
+                android:gravity="right"
                 android:padding="10dp"
+                android:text="Image Path:"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:gravity="right"/>
+                tools:ignore="HardcodedText,RtlHardcoded,TextSizeCheck" />
 
             <TextView
                 android:id="@+id/photoPath"
                 android:padding="5dp"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_width="fill_parent"
                 android:layout_weight="1"/>
         </TableRow>
         <TableRow>
-            <TextView android:text="Last Modified:"
-                android:textSize="15dp"
+
+            <TextView
+                android:gravity="right"
                 android:padding="10dp"
+                android:text="Last Modified:"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:gravity="right"/>
+                tools:ignore="HardcodedText,RtlHardcoded,TextSizeCheck" />
 
             <TextView
                 android:layout_width="fill_parent"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:padding="5dp"
                 android:id="@+id/photoLastModified"
                 android:layout_weight="1"
             />
         </TableRow>
         <TableRow>
-            <TextView android:text="Size:"
-                android:textSize="15dp"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:gravity="right"/>
 
             <TextView
-                android:textSize="15dp"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="Size:"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,RtlHardcoded,TextSizeCheck" />
+
+            <TextView
+                android:textSize="15sp"
                 android:padding="5dp"
                 android:id="@+id/photoSize"
                 />
         </TableRow>
     </TableLayout>
+
     <ImageButton
-        android:theme="@style/dSelectedBtn"
         android:id="@+id/ok_button"
-        android:layout_marginTop="20dp"
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_baseline_check_24" />
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_baseline_check_24"
+        android:theme="@style/dSelectedBtn"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 </LinearLayout>

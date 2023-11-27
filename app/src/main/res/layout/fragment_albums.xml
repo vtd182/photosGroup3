@@ -24,7 +24,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:ignore="UselessParent">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/album_fab_add"
@@ -35,7 +36,8 @@
                 android:contentDescription="Expand"
                 android:src="@drawable/baseline_add_50"
                 android:theme="@style/customFloatBtnPri"
-                app:elevation="0dp" />
+                app:elevation="0dp"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -21,7 +21,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -34,16 +36,21 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.photosGroup3.Callback.chooseAndDelete;
 import com.example.photosGroup3.Utils.ImageDate;
@@ -92,10 +99,15 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     public static boolean isMain = true;
     ArrayList<String> selectedImages = new ArrayList<>();
 
-    String sortType="Date";
+    String sortType = "Date";
     ImageButton sortBtn;
+
+    boolean isGridView = true;
+
     private ImageDisplay() {
     }
+
+    Toolbar toolbar;
 
     public static ImageDisplay getInstance() {
         if (INSTANCE == null) {
@@ -131,6 +143,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     public class CustomAdapter extends BaseAdapter {
         private final ArrayList<String> imagePhotos;
         private final LayoutInflater layoutInflater;
+
         private class ViewHolder {
             ImageView imageView;
             CheckBox check;
@@ -204,7 +217,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
             }
             File imgFile = new File(imagePhotos.get(i));
             ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse(
-                    "file://" + imgFile.getAbsolutePath())),
+                            "file://" + imgFile.getAbsolutePath())),
                     viewHolder.imageView);
             return view;
         }
@@ -294,7 +307,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
             }
             File imgFile = new File(imagePhotos.get(i));
             ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse(
-                    "file://" + imgFile.getAbsolutePath())),
+                            "file://" + imgFile.getAbsolutePath())),
                     viewHolder.imageView);
             return view;
         }
@@ -304,13 +317,52 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getActivity();
-
+        setHasOptionsMenu(true);
+        Toast.makeText(context, "Oncrt", Toast.LENGTH_SHORT).show();
         if (images == null) {
             assert context != null;
             setImagesData(((MainActivity) context).getFileinDir());
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        if (item.getItemId() == R.id.item_sort_by_name) {
+            sortType = "Name";
+            sortImage();
+            notifyChangeGridLayout();
+        } else if (item.getItemId() == R.id.item_sort_by_date) {
+            sortType = "Date";
+            sortImage();
+            notifyChangeGridLayout();
+        } else if (item.getItemId() == R.id.item_search) {
+            Toast.makeText(getContext(), "Search", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.item_setting) {
+            Toast.makeText(getContext(), "Setting", Toast.LENGTH_SHORT).show();
+            // Chuyển đến fragment khác (ví dụ: YourSettingsFragment)
+            SettingsFragment settingsFragment = new SettingsFragment();
+            FragmentTransaction transaction = requireFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, settingsFragment);
+            transaction.addToBackStack(null); // Để thêm fragment vào stack để có thể quay lại
+            transaction.commit();
+        } else if (item.getItemId() == R.id.item_view) {
+            if (!isGridView) {
+                gridView.setAdapter(customAdapter);
+                gridView.setNumColumns(4);
+                isGridView = true;
+                item.setTitle("Xem dạng danh sách");
+            } else {
+                gridView.setAdapter(listAdapter);
+                gridView.setNumColumns(1);
+                isGridView = false;
+                item.setTitle("Xem dạng lưới");
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -323,11 +375,21 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_image_display, container, false);
 
+        toolbar = view.findViewById(R.id.toolbar1);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        assert activity != null;
+        activity.setSupportActionBar(toolbar);
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
+
         gridView = view.findViewById(R.id.gridView);
-        changeBtn = view.findViewById(R.id.resizeView);
+        //changeBtn = view.findViewById(R.id.resizeView);
         cardView = view.findViewById(R.id.cardView);
         fab_camera = view.findViewById(R.id.fab_Camera);
-        sortBtn = view.findViewById(R.id.sortView);
+        //sortBtn = view.findViewById(R.id.sortView);
         fab_expand = view.findViewById(R.id.fab_expand);
         fab_url = view.findViewById(R.id.fab_url);
 
@@ -352,7 +414,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
                         .putExtra("images", images)
                         .putExtra("dates", dates)
                         .putExtra("pos", i));
-                Toast.makeText(context, "running", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -375,30 +436,28 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         });
 
 
-        changeBtn.setOnClickListener(view14 -> {
-            numCol = numCol % 5 + 1;
-            if (numCol == 1) {
-//                    numCol=2;
-                gridView.setAdapter(listAdapter);
+//        changeBtn.setOnClickListener(view14 -> {
+//            numCol = numCol % 5 + 1;
+//            if (numCol == 1) {
+//                gridView.setAdapter(listAdapter);
+//
+//            } else if (numCol == 2) {
+//                gridView.setAdapter(customAdapter);
+//            }
+//            gridView.setNumColumns(numCol);
+//        });
 
-            } else if (numCol == 2) {
-                gridView.setAdapter(customAdapter);
-            }
-            gridView.setNumColumns(numCol);
-        });
-
-        sortBtn.setOnClickListener(view1 -> {
-            if (sortType.equals("Date")){
-                sortType="Name";
-                Toast.makeText(getContext(), "Sort by name", Toast.LENGTH_SHORT).show();
-            }
-            else if (sortType.equals("Name")){
-                sortType="Date";
-                Toast.makeText(getContext(), "Sort by date", Toast.LENGTH_SHORT).show();
-            }
-            sortImage();
-            notifyChangeGridLayout();
-        });
+//        sortBtn.setOnClickListener(view1 -> {
+//            if (sortType.equals("Date")) {
+//                sortType = "Name";
+//                Toast.makeText(getContext(), "Sort by name", Toast.LENGTH_SHORT).show();
+//            } else if (sortType.equals("Name")) {
+//                sortType = "Date";
+//                Toast.makeText(getContext(), "Sort by date", Toast.LENGTH_SHORT).show();
+//            }
+//            sortImage();
+//            notifyChangeGridLayout();
+//        });
 
 
         fab_camera.setOnClickListener(view12 -> openCamera());
@@ -416,7 +475,8 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
             }
         });
 
-        header = view.findViewById(R.id.header);
+        //header = view.findViewById(R.id.header);
+
 
         return view;
     }
@@ -598,8 +658,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         size = new ArrayList<>(this.images.size());
         for (int i = 0; i < this.images.size(); i++) {
             File file = new File(this.images.get(i));
-            if (file.exists())
-            {
+            if (file.exists()) {
                 ExifInterface intf = null;
                 try {
                     intf = new ExifInterface(this.images.get(i));
@@ -638,8 +697,8 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         sortImage();
     }
 
-    private void sortImage(){
-        if (sortType.equals("Date")){
+    private void sortImage() {
+        if (sortType.equals("Date")) {
             //sort obj
             Collections.sort(imgDates);
             Collections.reverse(imgDates);
@@ -648,8 +707,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
             for (int i = 0; i < imgDates.size(); i++) {
                 this.images.set(i, imgDates.get(i).getImage());
             }
-        }
-        else if (sortType.equals("Name")){
+        } else if (sortType.equals("Name")) {
             Collections.sort(imgNames);
             Collections.reverse(imgNames);
 
@@ -662,8 +720,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
     public void addNewImage(String imagePath, int status) {
         File file = new File(imagePath);
-        if (!file.exists())
-        {
+        if (!file.exists()) {
             return;
         }
         if (!images.contains(imagePath)) {
@@ -707,6 +764,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
     public interface LongClickCallback {
         void onLongClick();
+
         void afterLongClick();
     }
 }

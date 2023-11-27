@@ -27,7 +27,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
         <RadioGroup
             android:id="@+id/musicGroup"
@@ -45,21 +46,25 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:gravity="center"
-                android:text="default 01" />
+                android:minHeight="48dp"
+                android:text="default 01"
+                tools:ignore="HardcodedText" />
 
             <RadioButton
                 android:id="@+id/music2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="default 02" />
+                android:text="default 02"
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
 
             <RadioButton
                 android:id="@+id/music3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="default 03" />
+                android:text="default 03"
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
         </RadioGroup>
 
         <LinearLayout
@@ -79,7 +84,8 @@
                 android:layout_height="48dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_baseline_close_24"
-                android:theme="@style/dSelectedBtn" />
+                android:theme="@style/dSelectedBtn"
+                tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
 
             <ImageButton
                 android:id="@+id/comfirmSlider"
@@ -87,7 +93,8 @@
                 android:layout_height="48dp"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/ic_baseline_check_24"
-                android:theme="@style/dSelectedBtn" />
+                android:theme="@style/dSelectedBtn"
+                tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -12,6 +12,7 @@
         android:layout_height="500dp"
         android:layout_centerHorizontal="true"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
 </RelativeLayout>

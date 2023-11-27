@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -13,7 +14,8 @@
         android:text="Rename Album"
         android:textAlignment="center"
         android:textSize="25dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
 
     <TextView
         android:layout_width="match_parent"
@@ -25,7 +27,8 @@
         android:gravity="center_vertical"
         android:text="Album's  name: "
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/old_album_name"
@@ -40,7 +43,8 @@
         android:minWidth="400dp"
         android:minHeight="48dp"
         android:text="Old Album's Name"
-        android:textColor="@color/imageBtn" />
+        android:textColor="@color/imageBtn"
+        tools:ignore="Autofill,Deprecated,HardcodedText,LabelFor,TextContrastCheck,VisualLintTextFieldSize" />
 
     <TextView
         android:layout_width="match_parent"
@@ -52,7 +56,8 @@
         android:gravity="center_vertical"
         android:text="New Album's  name: "
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/rename_album_name"
@@ -65,7 +70,8 @@
         android:hint="New Album's Name"
         android:inputType="textPersonName"
         android:minWidth="400dp"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        tools:ignore="Autofill,HardcodedText,VisualLintTextFieldSize" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -80,7 +86,8 @@
             android:layout_height="48dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/button_line"
-            android:src="@drawable/ic_baseline_close_24" />
+            android:src="@drawable/ic_baseline_close_24"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/rename_alubum_button"
@@ -88,7 +95,8 @@
             android:layout_height="48dp"
             android:layout_marginLeft="30dp"
             android:background="@drawable/button_line"
-            android:src="@drawable/ic_baseline_check_24" />
+            android:src="@drawable/ic_baseline_check_24"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
     </LinearLayout>
 
 </LinearLayout>

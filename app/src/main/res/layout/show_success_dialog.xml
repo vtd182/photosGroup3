@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -12,23 +13,27 @@
         android:text="Successful"
         android:layout_marginBottom="12dp"
         android:textAlignment="center"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"
+        tools:ignore="HardcodedText" />
+
     <TextView
+        android:id="@+id/messageShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/messageShow"
         android:layout_gravity="center"
-        android:textSize="16dp"
         android:layout_marginBottom="16dp"
         android:text="Change Successfully"
-        />
+        android:textSize="16dp"
+        tools:ignore="HardcodedText,SpUsage,TextSizeCheck" />
+
     <ImageButton
         android:id="@+id/ok_button"
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:src="@drawable/ic_baseline_check_24"
         android:theme="@style/dSelectedBtn"
-        android:src="@drawable/ic_baseline_check_24" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </LinearLayout>

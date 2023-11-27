@@ -48,7 +48,7 @@ public class BlurEditorFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        @SuppressLint("InflateParams") LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.edit_blur_fragment, null);
+        @SuppressLint("InflateParams") LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.blur_fragment, null);
 
         seekBar = layout.findViewById(R.id.edit_blur_amount);
         backBtn = layout.findViewById(R.id.blur_back_btns);

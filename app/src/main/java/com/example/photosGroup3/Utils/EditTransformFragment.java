@@ -18,15 +18,13 @@ import com.example.photosGroup3.R;
 
 public class EditTransformFragment extends Fragment {
     EditImage main;
-    Context context=null;
-
+    Context context = null;
     ImageButton verticalBtn;
     ImageButton horizontalBtn;
     ImageButton backBtn;
 
 
-    public static EditTransformFragment newInstance()
-    {
+    public static EditTransformFragment newInstance() {
         return new EditTransformFragment();
     }
 
@@ -36,16 +34,18 @@ public class EditTransformFragment extends Fragment {
         try {
             context = getContext(); // use this reference to invoke the onAttachMethod
             main = (EditImage) getActivity();
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             throw new IllegalStateException("MainActivity must implement callbacks");
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        @SuppressLint("InflateParams") LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.edit_transform_fragment,null);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        @SuppressLint("InflateParams") View layout = inflater.
+                inflate(R.layout.edit_transform_fragment, null);
 
         verticalBtn = layout.findViewById(R.id.vertical_flip);
         verticalBtn.setOnClickListener(view -> main.TransformVertical());

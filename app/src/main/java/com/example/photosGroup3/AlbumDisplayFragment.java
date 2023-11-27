@@ -147,7 +147,7 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
             super(context);
             addedPaths.clear();
             @SuppressLint("InflateParams") RelativeLayout layout =
-                    (RelativeLayout) getLayoutInflater().inflate(R.layout.image_choosing, null);
+                    (RelativeLayout) getLayoutInflater().inflate(R.layout.image_choosing_bar, null);
 
             GridView imageList = layout.findViewById(R.id.image_choosing_imageList);
             imageList.setAdapter(new ImageChoosingAdapter(((MainActivity) context).getFileinDir()));

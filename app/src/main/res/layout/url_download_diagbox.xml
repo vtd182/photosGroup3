@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -15,7 +16,8 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,SpUsage" />
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +32,7 @@
                 android:text="URL:"
                 android:padding="10dp"
                 android:textStyle="bold"
-                >
+                tools:ignore="HardcodedText">
 
             </TextView>
 
@@ -39,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ex: https://bom.so/mobile1"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                tools:ignore="Autofill,HardcodedText,SpUsage,TextFields,TextSizeCheck,TouchTargetSizeCheck,VisualLintTextFieldSize" />
         </TableRow>
         <TableRow>
             <TextView
@@ -47,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:text="Rename:"
                 android:textStyle="bold"
-                android:padding="10dp">
+                android:padding="10dp"
+                tools:ignore="HardcodedText">
 
             </TextView>
 
@@ -56,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name (optional)"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                tools:ignore="Autofill,HardcodedText,SpUsage,TextFields,TextSizeCheck,TouchTargetSizeCheck,VisualLintTextFieldSize" />
         </TableRow>
     </TableLayout>
 
@@ -67,21 +72,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
+
         <ImageButton
-            android:theme="@style/dSelectedBtn"
             android:id="@+id/download_url_cancel"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_baseline_close_24"
             android:layout_marginRight="20dp"
-            />
+            android:src="@drawable/ic_baseline_close_24"
+            android:theme="@style/dSelectedBtn"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
 
         <ImageButton
-            android:theme="@style/dSelectedBtn"
             android:id="@+id/download_url_confirm"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_baseline_check_24" />
+            android:src="@drawable/ic_baseline_check_24"
+            android:theme="@style/dSelectedBtn"
+            tools:ignore="ContentDescription,RtlHardcoded,SpeakableTextPresentCheck" />
     </LinearLayout>
 </LinearLayout>
