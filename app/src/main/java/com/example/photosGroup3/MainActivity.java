@@ -165,21 +165,12 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
 
         arrNavLinearLayouts[0].setOnClickListener(new NavLinearLayouts(0));
         arrNavLinearLayouts[1].setOnClickListener(new NavLinearLayouts(1));
-        arrNavLinearLayouts[2].setOnClickListener(new NavLinearLayouts(2));
+        //arrNavLinearLayouts[2].setOnClickListener(new NavLinearLayouts(2));
 
         setCurrentDirectory(Picture);
         setSupportActionBar(toolbar);
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        Toast.makeText(this, "onCreateOptionsMenu", Toast.LENGTH_SHORT).show();
-        Log.d("Callback", "Callback is called");
-        getMenuInflater().inflate(R.menu.menu_for_main_activity, menu);
-        return true;
-    }
-
 
     @SuppressLint("SetWorldReadable")
     @Override
@@ -648,15 +639,15 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
 
         arrNavLinearLayouts[0] = findViewById(R.id.photosLayout);
         arrNavLinearLayouts[1] = findViewById(R.id.albumsLayout);
-        arrNavLinearLayouts[2] = findViewById(R.id.settingsLayout);
+        //arrNavLinearLayouts[2] = findViewById(R.id.settingsLayout);
 
         arrNavImageViews[0] = findViewById(R.id.photos_img);
         arrNavImageViews[1] = findViewById(R.id.albums_img);
-        arrNavImageViews[2] = findViewById(R.id.settings_img);
+        //arrNavImageViews[2] = findViewById(R.id.settings_img);
 
         arrNavTextViews[0] = findViewById(R.id.photos_txt);
         arrNavTextViews[1] = findViewById(R.id.albums_txt);
-        arrNavTextViews[2] = findViewById(R.id.settings_txt);
+        //arrNavTextViews[2] = findViewById(R.id.settings_txt);
 
     }
 
@@ -745,7 +736,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
                             .replace(R.id.fragment_container, ImageDisplay.newInstance(), null)
                             .commit();
                 }
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     if (i != thisIndex) {
                         arrNavTextViews[i].setVisibility(View.GONE);
 

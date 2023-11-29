@@ -259,37 +259,37 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/settingsLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:theme="@style/fragBtn"
-            tools:ignore="UseCompoundDrawables">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/settingsLayout"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingStart="5dp"-->
+<!--            android:paddingEnd="5dp"-->
+<!--            android:theme="@style/fragBtn"-->
+<!--            tools:ignore="UseCompoundDrawables">-->
 
-            <ImageView
-                android:id="@+id/settings_img"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_baseline_settings"
-                tools:ignore="ContentDescription" />
+<!--            <ImageView-->
+<!--                android:id="@+id/settings_img"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:src="@drawable/ic_baseline_settings"-->
+<!--                tools:ignore="ContentDescription" />-->
 
-            <TextView
-                android:id="@+id/settings_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="Settings"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/settings_txt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:text="Settings"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:visibility="gone"-->
+<!--                tools:ignore="HardcodedText" />-->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 

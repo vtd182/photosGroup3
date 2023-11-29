@@ -23,61 +23,6 @@
             <include
                 android:id="@+id/toolbar1"
                 layout="@layout/custom_toolbar_for_main_activity" />
-
-<!--            <TableLayout-->
-<!--                android:src="@android:drawable/divider_horizontal_dark"-->
-<!--                android:padding="10dp"-->
-<!--                android:id="@+id/header"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:stretchColumns="0">-->
-
-<!--                <TableRow>-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="70dp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:paddingStart="0sp"-->
-<!--                        android:text="Photos"-->
-<!--                        android:textAllCaps="false"-->
-<!--                        android:textSize="48sp"-->
-<!--                        android:textStyle="bold">-->
-
-<!--                    </TextView>-->
-
-
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/sortView"-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_gravity="center|right"-->
-<!--                        android:background="@drawable/custom_button"-->
-<!--                        android:backgroundTint="#DADADA"-->
-<!--                        android:padding="12dp"-->
-<!--                        android:scaleType="fitCenter"-->
-<!--                        android:src="@drawable/ic_baseline_autorenew_24"-->
-<!--                        android:theme="@style/imageBtn"-->
-<!--                        tools:ignore="SpeakableTextPresentCheck" />-->
-
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/resizeView"-->
-<!--                        android:layout_width="50dp"-->
-<!--                        android:layout_height="50dp"-->
-<!--                        android:layout_gravity="center|right"-->
-<!--                        android:background="@drawable/custom_button"-->
-<!--                        android:backgroundTint="#DADADA"-->
-<!--                        android:padding="12dp"-->
-<!--                        android:scaleType="fitCenter"-->
-<!--                        android:src="@drawable/menu"-->
-<!--                        android:theme="@style/imageBtn"-->
-<!--                        tools:ignore="SpeakableTextPresentCheck" />-->
-
-
-
-
-<!--                </TableRow>-->
-
-<!--            </TableLayout>-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>

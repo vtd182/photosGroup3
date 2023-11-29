@@ -111,10 +111,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         return toolbar;
     }
 
-    public void setToolbar(Toolbar toolbar) {
-        this.toolbar = toolbar;
-    }
-
     Toolbar toolbar;
 
     public static ImageDisplay getInstance() {
@@ -325,6 +321,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getActivity();
+        //noinspection deprecation
         setHasOptionsMenu(true);
         if (images == null) {
             assert context != null;
@@ -333,6 +330,14 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
     }
 
+    /** @noinspection deprecation*/
+    @Override
+    public void onCreateOptionsMenu(@NonNull android.view.Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_for_main_activity, menu);
+        //noinspection deprecation
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    /** @noinspection deprecation*/
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         if (item.getItemId() == R.id.item_sort_by_name) {
@@ -346,7 +351,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         } else if (item.getItemId() == R.id.item_search) {
             Toast.makeText(getContext(), "Search", Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.item_setting) {
-            Toast.makeText(getContext(), "Setting", Toast.LENGTH_SHORT).show();
             // Chuyển đến fragment khác (ví dụ: YourSettingsFragment)
             SettingsFragment settingsFragment = new SettingsFragment();
             FragmentTransaction transaction = requireFragmentManager().beginTransaction();
