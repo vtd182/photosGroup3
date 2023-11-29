@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     }
 
 
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private void showSliderDialogBox() {
         final Dialog customDialog = new Dialog(mainActivity);

@@ -104,7 +104,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
     boolean isGridView = true;
 
-    private ImageDisplay() {
+    public ImageDisplay() {
     }
 
     public Toolbar getToolbar() {
