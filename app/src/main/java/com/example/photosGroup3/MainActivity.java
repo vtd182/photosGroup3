@@ -41,14 +41,13 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.photosGroup3.Callback.MainCallBack;
 import com.example.photosGroup3.Utils.ImageDelete;
 import com.example.photosGroup3.Utils.SlideShow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -120,19 +119,10 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
         FileInPaths.clear();
         hashMap.clear();
 
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .delayBeforeLoading(0)
-                .resetViewBeforeLoading(true)
-                .showImageOnLoading(R.drawable.placehoder)
-                .showImageForEmptyUri(R.drawable.error_image)
-                .showImageOnFail(R.drawable.error_image)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .defaultDisplayImageOptions(defaultOptions)
-                .build();
-        ImageLoader.getInstance().init(config);
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.placehoder)
+                .error(R.drawable.error_image);
+        Glide.init(this, new GlideBuilder().setDefaultRequestOptions(requestOptions));
 
 
         mainActivity = this;

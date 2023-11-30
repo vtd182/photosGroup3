@@ -23,11 +23,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+import com.bumptech.glide.Glide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -250,8 +249,11 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
 
                 viewHolder.checkBox.setChecked(checkBoxValues.get(i));
                 File imgFile = new File(allImagePaths.get(i));
-                ImageLoader.getInstance().displayImage(String.valueOf(
-                        Uri.parse("file://" + imgFile.getAbsolutePath())), viewHolder.imageView);
+//                ImageLoader.getInstance().displayImage(String.valueOf(
+//                        Uri.parse("file://" + imgFile.getAbsolutePath())), viewHolder.imageView);
+                Glide.with(context)
+                        .load(Uri.parse("file://" + imgFile.getAbsolutePath()))
+                        .into(viewHolder.imageView);
                 return view;
             }
 

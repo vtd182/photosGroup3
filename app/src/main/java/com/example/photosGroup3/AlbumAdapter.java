@@ -66,11 +66,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         // Nếu là album Favourite
         if (albumList.get(position).name.equals(AlbumsFragment.favourite)) {
             holder.imageView.setImageResource(R.drawable.ic_baseline_favorite_24);
-            //           holder.itemView.setBackgroundResource(R.drawable.custom_row_album_favorite);
             return;
         } else {
             holder.imageView.setImageResource(R.drawable.ic_baseline_folder_24);
-//            holder.itemView.setBackgroundResource(R.drawable.custom_row_album);
         }
 
         colorChoosingState(holder.itemView, holder.isChoosing);

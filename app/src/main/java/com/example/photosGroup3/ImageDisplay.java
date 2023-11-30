@@ -1,7 +1,6 @@
 package com.example.photosGroup3;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -52,13 +51,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.photosGroup3.Callback.chooseAndDelete;
 import com.example.photosGroup3.Utils.ImageDate;
 import com.example.photosGroup3.Utils.ImageName;
 import com.example.photosGroup3.Utils.ImageUtility;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -220,9 +218,9 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
                 viewHolder.check.setVisibility(View.INVISIBLE);
             }
             File imgFile = new File(imagePhotos.get(i));
-            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse(
-                            "file://" + imgFile.getAbsolutePath())),
-                    viewHolder.imageView);
+            Glide.with(context)
+                    .load(Uri.parse("file://" + imgFile.getAbsolutePath()))
+                    .into(viewHolder.imageView);
             return view;
         }
     }
@@ -310,9 +308,9 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
                 viewHolder.check.setVisibility(View.INVISIBLE);
             }
             File imgFile = new File(imagePhotos.get(i));
-            ImageLoader.getInstance().displayImage(String.valueOf(Uri.parse(
-                            "file://" + imgFile.getAbsolutePath())),
-                    viewHolder.imageView);
+            Glide.with(context)
+                    .load(Uri.parse("file://" + imgFile.getAbsolutePath()))
+                    .into(viewHolder.imageView);
             return view;
         }
     }
@@ -450,7 +448,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 //        changeBtn.setOnClickListener(view14 -> {
 //            numCol = numCol % 5 + 1;
 //            if (numCol == 1) {
-//                gridView.setAdapter(listAdapter);
+//                gridView.setAdapt er(listAdapter);
 //
 //            } else if (numCol == 2) {
 //                gridView.setAdapter(customAdapter);
