@@ -34,6 +34,7 @@ public class AlbumsFragment extends Fragment {
     int spanColumns;
     static ArrayList<Album> albumList;
     public static String favourite = "Favourite";
+    public static String privateAlbum = "Private Album";
     FloatingActionButton fab_addNewAlbum;
     RecyclerView rcv_albumList;
     public static String folderPath = Environment
@@ -97,15 +98,25 @@ public class AlbumsFragment extends Fragment {
             }
         }
 
+        int privateAlbumIndex = indexOfPrivateAlbum(albumList);
+        if (privateAlbumIndex == -2) {
+            File privateAl = new File(path.getAbsolutePath() + "/" + privateAlbum);
+            privateAl.mkdirs();
+            albumList.add(0, new Album(privateAl.getAbsolutePath(), privateAl.getName(), imagePathInFolder(privateAl)));
+        } else {
+            Album pr = albumList.get(privateAlbumIndex);
+            albumList.remove(privateAlbumIndex);
+            albumList.add(0, pr);
+        }
         int favoriteIndex = indexOfFavorite(albumList);
         if (favoriteIndex == -1) {
             File favorite = new File(path.getAbsolutePath() + "/" + favourite);
             favorite.mkdirs();
-            albumList.add(0, new Album(favorite.getAbsolutePath(), favorite.getName(), imagePathInFolder(favorite)));
+            albumList.add(1, new Album(favorite.getAbsolutePath(), favorite.getName(), imagePathInFolder(favorite)));
         } else {
             Album fav = albumList.get(favoriteIndex);
             albumList.remove(favoriteIndex);
-            albumList.add(0, fav);
+            albumList.add(1, fav);
         }
     }
 
@@ -116,6 +127,15 @@ public class AlbumsFragment extends Fragment {
             }
         }
         return -1;
+    }
+
+    private static int indexOfPrivateAlbum(ArrayList<Album> list) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).name.equals(privateAlbum)) {
+                return i;
+            }
+        }
+        return -2;
     }
 
     private static ArrayList<String> imagePathInFolder(File folder) {

@@ -66,6 +66,10 @@ public class MoveOrCopyForDialog extends BottomSheetDialog {
             dismiss();
         });
 
+        if (album.name.equals(AlbumsFragment.privateAlbum)){
+            copy_btn.setVisibility(View.INVISIBLE);
+        }
+
         setContentView(layout);
     }
 

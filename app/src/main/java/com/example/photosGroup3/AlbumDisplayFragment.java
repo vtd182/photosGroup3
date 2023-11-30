@@ -71,10 +71,20 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
         header = layout.findViewById(R.id.album_header);
 
         back_button = layout.findViewById(R.id.album_display_back);
-        back_button.setOnClickListener(view -> ((MainActivity) context).getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, AlbumsFragment.getInstance(), null)
-                .setReorderingAllowed(true)
-                .commit());
+
+        back_button.setOnClickListener(view -> {
+            if (album.name.equals(AlbumsFragment.privateAlbum)){
+                ((MainActivity) context).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new SettingsFragment(), null)
+                        .setReorderingAllowed(true)
+                        .commit();
+            } else {
+                ((MainActivity) context).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, AlbumsFragment.getInstance(), null)
+                        .setReorderingAllowed(true)
+                        .commit();
+            }
+        });
 
         album_name = layout.findViewById(R.id.album_display_name);
         album_name.setText(album.name);

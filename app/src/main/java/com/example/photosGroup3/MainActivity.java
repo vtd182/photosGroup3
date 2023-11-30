@@ -81,14 +81,14 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     SharedPreferences shareConfig;
     SharedPreferences.Editor edit;
     public ArrayList<String> chooseToDeleteInList = new ArrayList<>();
-    LinearLayout[] arrNavLinearLayouts = new LinearLayout[3];
-    ImageView[] arrNavImageViews = new ImageView[3];
-    TextView[] arrNavTextViews = new TextView[3];
+    LinearLayout[] arrNavLinearLayouts = new LinearLayout[2];
+    ImageView[] arrNavImageViews = new ImageView[2];
+    TextView[] arrNavTextViews = new TextView[2];
     private int selectedTab = 0;
-    int[] arrRoundLayout = new int[3];
-    int[] arrIcon = new int[3];
-    int[] arrSelectedIcon = new int[3];
-    Fragment[] arrFrag = new Fragment[3];
+    int[] arrRoundLayout = new int[2];
+    int[] arrIcon = new int[2];
+    int[] arrSelectedIcon = new int[2];
+    Fragment[] arrFrag = new Fragment[2];
 
     Toolbar toolbar;
     public static String[] ImageExtensions = new String[]{
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
         Picture = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
 
         arrFrag[1] = AlbumsFragment.getInstance();
-        arrFrag[2] = new SettingsFragment();
+//        arrFrag[2] = new SettingsFragment();
 
         initView();
 
@@ -602,7 +602,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     void initView() {
         arrRoundLayout[0] = R.drawable.round_photos;
         arrRoundLayout[1] = R.drawable.round_albums;
-        arrRoundLayout[2] = R.drawable.round_settings;
+     //   arrRoundLayout[2] = R.drawable.round_settings;
 
         navbar = findViewById(R.id.navbar);
         chooseNavbar = findViewById(R.id.selectNavbar);
@@ -620,12 +620,12 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
 
         arrIcon[0] = R.drawable.ic_baseline_photo;
         arrIcon[1] = R.drawable.ic_baseline_photo_library;
-        arrIcon[2] = R.drawable.ic_baseline_settings;
+       // arrIcon[2] = R.drawable.ic_baseline_settings;
 
 
         arrSelectedIcon[0] = R.drawable.ic_baseline_photo_selected;
         arrSelectedIcon[1] = R.drawable.ic_baseline_photo_library_selected;
-        arrSelectedIcon[2] = R.drawable.ic_baseline_settings_selected;
+      //  arrSelectedIcon[2] = R.drawable.ic_baseline_settings_selected;
 
         arrNavLinearLayouts[0] = findViewById(R.id.photosLayout);
         arrNavLinearLayouts[1] = findViewById(R.id.albumsLayout);

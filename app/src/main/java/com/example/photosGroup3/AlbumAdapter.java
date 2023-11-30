@@ -49,39 +49,44 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.albumName.setText(albumList.get(position).name);
-
-        holder.albumImagesCount.setText(String.format(context.getString(R.string.album_image_count), albumList.get(position).imagePaths.size()));
-        View.OnClickListener displayAlbum = view -> {
-            int pos = holder.getBindingAdapterPosition();
-            ((MainActivity) context).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, AlbumDisplayFragment.newInstance(albumList.get(pos)), null)
-                    .setReorderingAllowed(true)
-                    .commit();
-        };
-
-        holder.itemView.setOnClickListener(displayAlbum);
-        setBackgroundColor(holder.itemView, null);
-
-        // Nếu là album Favourite
-        if (albumList.get(position).name.equals(AlbumsFragment.favourite)) {
-            holder.imageView.setImageResource(R.drawable.ic_baseline_favorite_24);
-            return;
+        if (position == 0){
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         } else {
-            holder.imageView.setImageResource(R.drawable.ic_baseline_folder_24);
-        }
+            holder.albumName.setText(albumList.get(position).name);
 
-        colorChoosingState(holder.itemView, holder.isChoosing);
-        holder.itemView.setOnLongClickListener(view -> {
+            holder.albumImagesCount.setText(String.format(context.getString(R.string.album_image_count), albumList.get(position).imagePaths.size()));
+            View.OnClickListener displayAlbum = view -> {
+                int pos = holder.getBindingAdapterPosition();
+                ((MainActivity) context).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, AlbumDisplayFragment.newInstance(albumList.get(pos)), null)
+                        .setReorderingAllowed(true)
+                        .commit();
+            };
 
-            holder.isChoosing = !holder.isChoosing;
+            holder.itemView.setOnClickListener(displayAlbum);
+            setBackgroundColor(holder.itemView, null);
+
+            // Nếu là album Favourite
+            if (albumList.get(position).name.equals(AlbumsFragment.favourite)) {
+                holder.imageView.setImageResource(R.drawable.ic_baseline_favorite_24);
+                return;
+            } else {
+                holder.imageView.setImageResource(R.drawable.ic_baseline_folder_24);
+            }
+
             colorChoosingState(holder.itemView, holder.isChoosing);
-            choosingAlbumView = holder;
-            choosingAlbum = albumList.get(holder.getAbsoluteAdapterPosition());
-            AlbumOperationDialog dialog = new AlbumOperationDialog(context);
-            dialog.show();
-            return true;
-        });
+            holder.itemView.setOnLongClickListener(view -> {
+
+                holder.isChoosing = !holder.isChoosing;
+                colorChoosingState(holder.itemView, holder.isChoosing);
+                choosingAlbumView = holder;
+                choosingAlbum = albumList.get(holder.getAbsoluteAdapterPosition());
+                AlbumOperationDialog dialog = new AlbumOperationDialog(context);
+                dialog.show();
+                return true;
+            });
+        }
     }
 
     @Override
