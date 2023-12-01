@@ -1,6 +1,5 @@
 package com.example.photosGroup3;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,19 +19,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -51,7 +45,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.example.photosGroup3.Callback.chooseAndDelete;
 import com.example.photosGroup3.Utils.ImageDate;
 import com.example.photosGroup3.Utils.ImageName;
@@ -142,177 +135,8 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         }
     }
 
-    public class CustomAdapter extends BaseAdapter {
-        private final ArrayList<String> imagePhotos;
-        private final LayoutInflater layoutInflater;
-
-        private class ViewHolder {
-            ImageView imageView;
-            CheckBox check;
-        }
-
-        public CustomAdapter(ArrayList<String> imagePhotos, @NonNull Context context) {
-            this.imagePhotos = imagePhotos;
-
-            this.layoutInflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getCount() {
-            return imagePhotos.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ViewHolder viewHolder;
-            if (view == null) {
-                view = layoutInflater.inflate(R.layout.row_item, viewGroup, false);
-                viewHolder = new ViewHolder();
-                viewHolder.imageView = view.findViewById(R.id.imageView);
-                viewHolder.check = view.findViewById(R.id.checkImage);
-                view.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) view.getTag();
-            }
-            if (isHolding) {
-                viewHolder.check.setVisibility(View.VISIBLE);
-
-                viewHolder.check.setChecked(selectedImages.contains(imagePhotos.get(i)));
-
-                viewHolder.check.setOnCheckedChangeListener((compoundButton, b) -> {
-                    if (compoundButton.isPressed()) {
-                        if (i < imagePhotos.size()) {
-
-                            if (b) {
-                                if (!selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).
-                                            adjustChooseToDeleteInList(imagePhotos.get(i),
-                                                    "choose");
-                                }
-
-                            } else {
-                                if (selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).
-                                            adjustChooseToDeleteInList(imagePhotos.get(i),
-                                                    "unchoose");
-                                }
-                            }
-                            ((MainActivity) requireContext()).SelectedTextChange();
-                            notifyChangeGridLayout();
-
-                        }
-                    }
-
-                });
-            } else {
-                viewHolder.check.setVisibility(View.INVISIBLE);
-            }
-            File imgFile = new File(imagePhotos.get(i));
-            Glide.with(context)
-                    .load(Uri.parse("file://" + imgFile.getAbsolutePath()))
-                    .into(viewHolder.imageView);
-            return view;
-        }
-    }
-
     public void setLongClickCallBack(LongClickCallback callback) {
         this.callback = callback;
-    }
-
-    public class ListAdapter extends BaseAdapter {
-        private final ArrayList<String> imageNames;
-        private final ArrayList<String> imagePhotos;
-        private final LayoutInflater layoutInflater;
-
-        private class ViewHolder {
-            TextView textView;
-            ImageView imageView;
-            CheckBox check;
-        }
-
-        public ListAdapter(ArrayList<String> imageNames, ArrayList<String> imagePhotos, Context context) {
-            this.imageNames = imageNames;
-            this.imagePhotos = imagePhotos;
-            this.layoutInflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        }
-
-        @Override
-        public int getCount() {
-            return imagePhotos.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ViewHolder viewHolder;
-            if (view == null) {
-                view = layoutInflater.inflate(R.layout.list_item, viewGroup, false);
-                viewHolder = new ViewHolder();
-                viewHolder.imageView = view.findViewById(R.id.imageView);
-                viewHolder.textView = view.findViewById(R.id.tvName);
-                viewHolder.check = view.findViewById(R.id.checkImage);
-                view.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) view.getTag();
-            }
-            TextView tvName = viewHolder.textView;
-            tvName.setText(imageNames.get(i));
-            if (isHolding) {
-                viewHolder.check.setVisibility(View.VISIBLE);
-
-                viewHolder.check.setChecked(selectedImages.contains(imagePhotos.get(i)));
-                viewHolder.check.setOnCheckedChangeListener((compoundButton, b) -> {
-                    if (compoundButton.isPressed()) {
-                        if (i < imagePhotos.size()) {
-
-                            if (b) {
-                                if (!selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).
-                                            adjustChooseToDeleteInList(imagePhotos.get(i),
-                                                    "choose");
-                                }
-
-                            } else {
-                                if (selectedImages.contains(imagePhotos.get(i))) {
-                                    selectedImages = ((MainActivity) requireContext()).
-                                            adjustChooseToDeleteInList(imagePhotos.get(i),
-                                                    "unhoose");
-                                }
-                            }
-                            ((MainActivity) requireContext()).SelectedTextChange();
-                            notifyChangeGridLayout();
-                        }
-                    }
-                });
-            } else {
-                viewHolder.check.setVisibility(View.INVISIBLE);
-            }
-            File imgFile = new File(imagePhotos.get(i));
-            Glide.with(context)
-                    .load(Uri.parse("file://" + imgFile.getAbsolutePath()))
-                    .into(viewHolder.imageView);
-            return view;
-        }
     }
 
     @Override
@@ -403,13 +227,13 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         fab_url = view.findViewById(R.id.fab_url);
 
         if (customAdapter == null) {
-            customAdapter = new CustomAdapter(images, requireActivity());
+            customAdapter = new CustomAdapter(this, images, requireActivity());
 
         } else {
             customAdapter.notifyDataSetChanged();
         }
         if (listAdapter == null) {
-            listAdapter = new ListAdapter(names, images, requireActivity());
+            listAdapter = new ListAdapter(this, names, dates, images, requireActivity());
         } else {
             listAdapter.notifyDataSetChanged();
         }
