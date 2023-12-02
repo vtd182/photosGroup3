@@ -608,11 +608,24 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
             ic.clearClicked();
         } else if (viewId == R.id.selectAll) {
             ImageDisplay ic2 = ImageDisplay.getInstance();
-            if (chooseToDeleteInList.size() == ic2.images.size()) {
-                chooseToDeleteInList.clear();
-            } else {
-                chooseToDeleteInList = new ArrayList<>(ic2.images);
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+            if (currentFragment instanceof SearchFragment) {
+                if (chooseToDeleteInList.size() == ic2.results.size()) {
+                    chooseToDeleteInList.clear();
+                } else {
+                    chooseToDeleteInList = new ArrayList<>(ic2.results);
+                }
+            } else if (currentFragment instanceof ImageDisplay) {
+                if (chooseToDeleteInList.size() == ic2.images.size()) {
+                    chooseToDeleteInList.clear();
+                } else {
+                    chooseToDeleteInList = new ArrayList<>(ic2.images);
+                }
             }
+
+
+
             ic2.selectAllClicked();
         } else if (viewId == R.id.createSliderBtn) {
             Toast.makeText(mainActivity, "Create slideshow", Toast.LENGTH_SHORT).show();

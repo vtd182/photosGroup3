@@ -101,7 +101,7 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
 
 
         ImageDisplay.changeINSTANCE();
-        ImageDisplay instance = ImageDisplay.getInstance();
+        ImageDisplay instance = ImageDisplay.newInstance();
         instance.setImagesData(album.imagePaths);
         ImageDisplay.getInstance().setLongClickCallBack(this);
 

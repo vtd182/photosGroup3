@@ -82,6 +82,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/action_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="6dp"

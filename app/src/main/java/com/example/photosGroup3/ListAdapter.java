@@ -1,5 +1,6 @@
 package com.example.photosGroup3;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -50,6 +51,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
             return new ListViewHolder(view);
         }
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void setImagePhotos(ArrayList<String> results) {
+        this.filteredList = results;
+        notifyDataSetChanged();
     }
 
     public void setGrid(boolean isGrid) {
@@ -111,6 +117,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         };
     }
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         protected final ImageView imageView;
         protected final CheckBox check;
@@ -121,14 +129,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             check = itemView.findViewById(R.id.checkImage);
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, SelectedPicture.class);
-                intent.putExtra("pos", getAdapterPosition());
+                intent.putExtra("pos", getBindingAdapterPosition());
                 intent.putExtra("images", filteredList);
                 context.startActivity(intent);
             });
             itemView.setOnLongClickListener(view -> {
                         ImageDisplay.getInstance().isHolding = true;
                         ((MainActivity) context).Holding(true);
-                        String selectedName = ImageDisplay.getInstance().images.get(getAdapterPosition());
+                        String selectedName = filteredList.get(getBindingAdapterPosition());
 
                         ImageDisplay.getInstance().selectedImages = ((MainActivity) context).
                                 adjustChooseToDeleteInList(selectedName, "choose");

@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -90,7 +91,13 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
 
     boolean isGridView = true;
 
+    ArrayList<String> results ;
+
     public ImageDisplay() {
+    }
+
+    public  FloatingActionButton getActionButton(){
+        return fab_expand;
     }
 
     public Toolbar getToolbar() {
@@ -502,6 +509,25 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
             this.images.remove(index);
             notifyChanged();
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void searchImage(String query){
+
+        if (query.isEmpty()){
+            results = this.images;
+        } else {
+            results = new ArrayList<>();
+            for (String image: this.images){
+                if (image.contains(query)){
+                    results.add(image);
+                }
+            }
+        }
+        Log.e("Tpoo","Search: " + results.toString());
+        listAdapter.setImagePhotos(results);
+        listAdapter.notifyDataSetChanged();
+
     }
 
     public interface LongClickCallback {
