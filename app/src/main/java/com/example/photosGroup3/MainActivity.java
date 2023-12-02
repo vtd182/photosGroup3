@@ -57,7 +57,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements MainCallBack, View.OnClickListener {
 
     public ArrayList<String> FileInPaths = new ArrayList<>();
-    static HashMap<Long, Bitmap> hashMap = new HashMap<>();
     String currentDirectory = null;
     String SD;
     String DCIM;
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FileInPaths.clear();
-        hashMap.clear();
 
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.placehoder)
@@ -321,12 +319,8 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
     public void removeImageUpdate(String[] input) {
         for (String name : input) {
 
-            Bitmap test = BitmapFactory.decodeFile(name);
             FileInPaths.remove(name);
             ImageDisplay.getInstance().removeImage(name);
-            if (test == null) return;
-            long HashCode = ImageDelete.hashBitmap(test);
-            hashMap.remove(HashCode);
 
         }
 
@@ -415,15 +409,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
 
 
     public void filterImage(String name) {
-        Bitmap test = BitmapFactory.decodeFile(name);
-        if (test == null) return;
-        long HashCode = ImageDelete.hashBitmap(test);
-        if (!hashMap.containsKey(HashCode)) {
-            FileInPaths.add(name);
-            hashMap.put(HashCode, test);
-        } else {
-            ImageDelete.DeleteImage(name);
-        }
+        FileInPaths.add(name);
     }
 
     private void readFolder(String Dir) {
@@ -459,37 +445,6 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
 
         } catch (Exception ignored) {
         }
-
-    }
-
-    public static boolean checkInHash(String name) {
-        Bitmap test = BitmapFactory.decodeFile(name);
-
-        if (test == null) return false;
-        // boolean have= false;
-        long HashCode = ImageDelete.hashBitmap(test);
-        if (!hashMap.containsKey(HashCode)) {
-
-            hashMap.put(HashCode, test);
-            return true;
-        } else {
-            ImageDelete.DeleteImage(name);
-        }
-        return false;
-
-    }
-
-    @Override
-    public void removeInHash(String name) {
-        new File(name);
-
-        Bitmap test = BitmapFactory.decodeFile(name);
-
-        if (test == null) return;
-        // boolean have= false;
-        long HashCode = ImageDelete.hashBitmap(test);
-        hashMap.remove(HashCode);
-
 
     }
 

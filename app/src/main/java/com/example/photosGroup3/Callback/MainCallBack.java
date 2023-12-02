@@ -19,7 +19,6 @@ public interface MainCallBack {
     void removeImageUpdate(String input);
 
     void renameImageUpdate(String oldNam, String newName);
-    void removeInHash(String name);
     void Holding(boolean isHolding);
     void SelectedTextChange();
     ArrayList<String> chooseToDeleteInList();

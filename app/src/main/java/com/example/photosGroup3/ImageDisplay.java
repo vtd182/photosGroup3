@@ -481,9 +481,7 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
         }
         if (!images.contains(imagePath)) {
             if (status == 0) {
-                if (!MainActivity.checkInHash((imagePath))) {
-                    return;
-                }
+                return;
             }
             ExifInterface intf = null;
             try {
@@ -501,7 +499,6 @@ public class ImageDisplay extends Fragment implements chooseAndDelete {
     public void removeImage(String name) {
         int index = this.images.indexOf(name);
         if (index != -1) {
-            ((MainActivity) requireContext()).removeInHash(name);
             this.images.remove(index);
             notifyChanged();
         }
