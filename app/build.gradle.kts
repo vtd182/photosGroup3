@@ -49,6 +49,7 @@ dependencies {
 
     implementation ( "com.github.bumptech.glide:glide:4.12.0" )
     // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
+    implementation ("me.xdrop:fuzzywuzzy:1.2.0")
     implementation ( "androidx.viewpager2:viewpager2:1.1.0-beta02" )
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")

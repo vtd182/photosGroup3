@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainCallBack, Vie
         Picture = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath();
 
         arrFrag[1] = AlbumsFragment.getInstance();
-        arrFrag[2] = new SearchFragment();
+        arrFrag[2] = SearchFragment.getInstance();
 
         initView();
 

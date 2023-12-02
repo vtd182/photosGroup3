@@ -115,12 +115,12 @@ public class AlbumDisplayFragment extends Fragment implements ImageDisplay.LongC
             ImageDisplay.getInstance().numCol = ImageDisplay.getInstance().numCol % 5 + 1;
             if (ImageDisplay.getInstance().numCol == 1) {
 //                    numCol=2;
-                ImageDisplay.getInstance().gridView.setAdapter(ImageDisplay.getInstance().listAdapter);
+                ImageDisplay.getInstance().recyclerView.setAdapter(ImageDisplay.getInstance().listAdapter);
 
             } else if (ImageDisplay.getInstance().numCol == 2) {
-                ImageDisplay.getInstance().gridView.setAdapter(ImageDisplay.getInstance().customAdapter);
+//                ImageDisplay.getInstance().gridView.setAdapter(ImageDisplay.getInstance().customAdapter);
             }
-            ImageDisplay.getInstance().gridView.setNumColumns(ImageDisplay.getInstance().numCol);
+//            ImageDisplay.getInstance().gridView.setNumColumns(ImageDisplay.getInstance().numCol);
         });
         return layout;
     }

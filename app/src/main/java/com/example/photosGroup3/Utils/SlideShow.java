@@ -88,23 +88,6 @@ public class SlideShow extends AppCompatActivity {
                 }
             }
 
-            //get object
-            ArrayList<ImageDate> imgDates = new ArrayList<ImageDate>();
-            for(int i=0;i<images.length;i++){
-                ImageDate temp = new ImageDate(images[i],listDate.get(i));
-                imgDates.add(temp);
-            }
-
-            //sort obj
-            Collections.sort(imgDates);
-            Collections.reverse(imgDates);
-
-            //change images after sort
-            for(int i=0;i<imgDates.size();i++){
-                images[i]=imgDates.get(i).getImage();
-            }
-
-
             listItem=new  ArrayList<viewPagerItem> ();
             for(int i=0;i<images.length;i++){
                 viewPagerItem item = new viewPagerItem(images[i]);

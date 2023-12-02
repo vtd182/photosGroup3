@@ -3,6 +3,7 @@ package com.example.photosGroup3;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,6 +13,13 @@ import android.widget.SearchView;
 
 public class SearchFragment extends Fragment {
 
+    static public SearchFragment getInstance() {
+        if (instance == null) {
+            instance = new SearchFragment();
+        }
+        return instance;
+    }
+    static SearchFragment instance=null;
     SearchView searchView;
     RecyclerView recyclerView;
     ListAdapter adapter;
@@ -27,21 +35,30 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) { return false; }
+            public boolean onQueryTextSubmit(String s) {
+                adapter.getFilter().filter(s);
+                return false; }
             @Override
             public boolean onQueryTextChange(String s) {
-                //adapter.getFilter().filter(s);
+                adapter.getFilter().filter(s);
                 return false;
             }
         });
-        adapter = new ListAdapter(getContext(), MainActivity.albums);
+        ImageDisplay imageDisplay = ImageDisplay.getInstance();
+        recyclerView.setLayoutManager(new GridLayoutManager(imageDisplay.context,4));
+        adapter = new ListAdapter(imageDisplay, imageDisplay.images,true,getContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter.getFilter().filter("");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override

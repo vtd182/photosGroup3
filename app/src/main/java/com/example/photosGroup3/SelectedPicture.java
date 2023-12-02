@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,13 +42,7 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
 
     ViewPager2 viewPager2;
     ArrayList<viewPagerItem> listItem;
-    String[] paths;
-    String[] dates;
-    String[] names;
-    int[] size;
     ArrayList<String> imagesPath;
-    ArrayList<String> imagesDate;
-    ArrayList<Integer> imagesSize;
     LinearLayout subInfo;
     LinearLayout changeWallpaper;
     LinearLayout changeWallpaperLock;
@@ -201,39 +196,16 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
         if (intent.getExtras() != null) {
             //cut name
             imagesPath = intent.getStringArrayListExtra("images");
-            imagesDate = intent.getStringArrayListExtra("dates");
-            imagesSize = intent.getIntegerArrayListExtra("size");
             int pos = intent.getIntExtra("pos", 0);
             String selectedName = intent.getStringExtra("name");
             ArrayList<String> images = intent.getStringArrayListExtra("images");
 
 
             assert images != null;
-            names = new String[images.size()];
-            // fix name from data
-            for (int i = 0; i < images.size(); i++) {
-                names[i] = images.get(i);
-            }
-
-
-            paths = new String[imagesPath.size()];
-            for (int i = 0; i < imagesPath.size(); i++) {
-                paths[i] = imagesPath.get(i);
-            }
-
-            dates = new String[imagesDate.size()];
-            for (int i = 0; i < imagesDate.size(); i++) {
-                dates[i] = imagesDate.get(i);
-            }
-
-            size = new int[imagesSize.size()];
-            for (int i = 0; i < imagesSize.size(); i++) {
-                size[i] = imagesSize.get(i);
-            }
 
             listItem = new ArrayList<>();
             for (int i = 0; i < imagesPath.size(); i++) {
-                viewPagerItem item = new viewPagerItem(paths[i]);
+                viewPagerItem item = new viewPagerItem(imagesPath.get(i));
                 listItem.add(item);
             }
             if (aa == null)
@@ -270,7 +242,7 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
             shareBtn.setOnClickListener(view -> {
 
                 ArrayList<String> listPaths = new ArrayList<>();
-                listPaths.add(names[currentPosition]);
+                listPaths.add(currentSelectedName);
                 shareSingleImages(listPaths);
             });
 
@@ -369,10 +341,6 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void removeImageUpdate(String input) {
-        // remove on selected image
-        deleteStringArrayByPossision(paths, currentPosition);
-        deleteStringArrayByPossision(dates, currentPosition);
-        deleteIntergerArrayByPossision(size, currentPosition);
         // remove on adapter
         listItem.remove(currentPosition);
         viewPager2.setCurrentItem(currentPosition, false);
@@ -382,9 +350,9 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
 
     public void renameImageUpdate(String input) {
         // rename on selected image
-        paths[currentPosition] = paths[currentPosition].
-                substring(0, paths[currentPosition].
-                        lastIndexOf("/") + 1) + input;
+        imagesPath.set(currentPosition, imagesPath.get(currentPosition).
+                substring(0, imagesPath.get(currentPosition).
+                        lastIndexOf("/") + 1) + input);
     }
 
     @Override
@@ -470,6 +438,8 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
     @SuppressLint("SetTextI18n")
     private void showCustomDialogBoxInformation() {
         final Dialog customDialog = new Dialog(this);
+        File imgFile = new File(imagesPath.get(currentPosition));
+        Date lastModDate = new Date(imgFile.lastModified());
         customDialog.setTitle("Information of Picture");
 
         customDialog.setContentView(R.layout.infomation_picture_dialog);
@@ -477,13 +447,13 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
 
 //
         ((TextView) customDialog.findViewById(R.id.photoName))
-                .setText(shortenName(ImageDisplay.getDisplayName(paths[currentPosition])));
+                .setText(shortenName(ImageDisplay.getDisplayName(imagesPath.get(currentPosition))));
         ((TextView) customDialog.findViewById(R.id.photoPath))
-                .setText(paths[currentPosition]);
+                .setText(imagesPath.get(currentPosition));
         ((TextView) customDialog.findViewById(R.id.photoLastModified))
-                .setText(dates[currentPosition]);
+                .setText(lastModDate.toString());
         ((TextView) customDialog.findViewById(R.id.photoSize))
-                .setText(Math.round(size[currentPosition] * 1.0 / 1024) + " KB");
+                .setText(Math.round((imgFile.getTotalSpace()) * 1.0 / 1024) + " KB");
 //        Toast.makeText(this, imagesSize[currentPosition]+"", Toast.LENGTH_SHORT).show();
         customDialog.findViewById(R.id.ok_button)
                 .setOnClickListener(view -> {
@@ -587,19 +557,19 @@ public class SelectedPicture extends AppCompatActivity implements ISelectedPictu
                     if (!isFileName(editText.getText() + "")) {
                         customDialog.findViewById(R.id.errorName).setVisibility(View.VISIBLE);
                     } else {
-                        String fileExtension = paths[currentPosition].substring(paths[currentPosition].lastIndexOf("."));
+                        String fileExtension = imagesPath.get(currentPosition).substring(imagesPath.get(currentPosition).lastIndexOf("."));
                         while (fileExtension.charAt(fileExtension.length() - 1) == '\n') {
                             fileExtension = fileExtension.substring(0, fileExtension.length() - 1);
                         }
                         String newName = editText.getText() + fileExtension;
                         customDialog.dismiss();
-                        File oldImg = new File(paths[currentPosition]);
+                        File oldImg = new File(imagesPath.get(currentPosition));
                         String oldImg_name = oldImg.getName();
-                        File newImg = new File(paths[currentPosition].replace(oldImg_name, newName));
+                        File newImg = new File(imagesPath.get(currentPosition).replace(oldImg_name, newName));
 
                         ic.removeImage(oldImg.getAbsolutePath());
                         if (oldImg.renameTo(newImg)) {
-                            newImg = new File(paths[currentPosition].replace(oldImg_name, newName));
+                            newImg = new File(imagesPath.get(currentPosition).replace(oldImg_name, newName));
                             ic.addNewImage(newImg.getAbsolutePath(), 0);
                             Toast.makeText(getApplicationContext(), "Rename succeeded", Toast.LENGTH_SHORT).show();
                         } else {

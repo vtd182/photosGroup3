@@ -26,13 +26,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
-            <GridView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:horizontalSpacing="8dp"
-                android:numColumns="4"
-                android:verticalSpacing="8dp" />
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -43,58 +40,49 @@
         app:layout_anchor="@+id/imagedisplay"
         app:layout_anchorGravity="center">
 
-        <LinearLayout
+        <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fab_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/fab_Camera"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:contentDescription="Url"
+            android:src="@android:drawable/stat_sys_download"
+            android:theme="@style/customFloatBtnSec"
+            app:borderWidth="0dp"
+
+            app:elevation="0dp" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fab_Camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/fab_expand"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="26dp"
+            android:clickable="true"
+            android:contentDescription="Camera"
+            android:src="@android:drawable/ic_menu_camera"
+            android:theme="@style/customFloatBtnSec"
+            app:borderWidth="0dp"
+            app:elevation="0dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_expand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/fab_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/fab_Camera"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:contentDescription="Url"
-                android:src="@android:drawable/stat_sys_download"
-                android:theme="@style/customFloatBtnSec"
-                app:borderWidth="0dp"
-
-                app:elevation="0dp" />
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/fab_Camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/fab_expand"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="26dp"
-                android:clickable="true"
-                android:contentDescription="Camera"
-                android:src="@android:drawable/ic_menu_camera"
-                android:theme="@style/customFloatBtnSec"
-                app:borderWidth="0dp"
-                app:elevation="0dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_expand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="6dp"
-                android:clickable="true"
-                android:contentDescription="Expand"
-                android:src="@drawable/baseline_add_50"
-                android:theme="@style/customFloatBtnPri"
-                app:borderWidth="0dp"
-                app:elevation="0dp" />
-        </LinearLayout>
+            android:layout_marginBottom="6dp"
+            android:clickable="true"
+            android:contentDescription="Expand"
+            android:src="@drawable/baseline_add_50"
+            android:theme="@style/customFloatBtnPri"
+            app:borderWidth="0dp"
+            app:elevation="0dp" />
 
     </RelativeLayout>
 

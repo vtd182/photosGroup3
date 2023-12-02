@@ -19,9 +19,8 @@ public class DownloadBR extends BroadcastReceiver {
         ImageDisplay ic = ImageDisplay.getInstance();
         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
             String[] result = new String[1];
-            ic.dates.add((new Date()).toString());
             File kl = new File(ic.fullNameFile);
-            ic.size.add(Integer.parseInt(String.valueOf(kl.length() / 1024)));
+//            ic.size.add(Integer.parseInt(String.valueOf(kl.length() / 1024)));
             result[0] = ic.fullNameFile;
             if (Objects.equals(ic.fullNameFile, "")) {
                 Toast.makeText(ic.getContext(), "Download error, please try again", Toast.LENGTH_SHORT).show();
