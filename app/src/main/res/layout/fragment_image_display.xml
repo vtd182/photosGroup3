@@ -26,42 +26,46 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
     </FrameLayout>
 
     <RelativeLayout
+        android:id="@+id/relative_layout_image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:elevation="6dp"
         app:layout_anchor="@+id/imagedisplay"
         app:layout_anchorGravity="center">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/fab_Camera"
             android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:contentDescription="Url"
             android:src="@android:drawable/stat_sys_download"
             android:theme="@style/customFloatBtnSec"
-            app:borderWidth="0dp"
 
+            app:borderWidth="0dp"
             app:elevation="0dp" />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_Camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/fab_expand"
             android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="26dp"
             android:clickable="true"
             android:contentDescription="Camera"
@@ -76,7 +80,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="6dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp"
             android:clickable="true"
             android:contentDescription="Expand"
             android:src="@drawable/baseline_add_50"
